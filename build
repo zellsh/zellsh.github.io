@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # der volle Pfad des directories in dem dieses build Skript liegt
 this_path="$(dirname "$(readlink -f "$0")")"
