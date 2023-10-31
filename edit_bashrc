@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+
+base64_addition='PLACEHOLDER_bashrc_addition'
+
+if [ -f "$HOME/.bashrc" ]; then
+    grep -vE '# Viel Spass mit Zell!' "$HOME/.bashrc" > "$HOME/.bashrc_new"
+    mv "$HOME/.bashrc_new" "${HOME}/.bashrc"
+    echo "$base64_addition" | base64 --decode >> "$HOME/.bashrc"
+fi
+
+if [ -f "$HOME/.zshrc" ]; then
+    grep -vE '# Viel Spass mit Zell!' "$HOME/.zshrc" > "$HOME/.zshrc_new"
+    mv "$HOME/.zshrc_new" "${HOME}/.zshrc"
+    echo "$base64_addition" | base64 --decode >> "$HOME/.zshrc"
+fi

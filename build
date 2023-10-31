@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# der volle Pfad des directories in dem dieses build Skript liegt
+this_path="$(dirname "$(readlink -f "$0")")"
+
+sed "s/PLACEHOLDER_bashrc_addition/$(base64 "$this_path/bashrc_addition" | tr -d '\n')/g" "$this_path/edit_bashrc" > "$this_path/edit_bashrc.tmp"
+
+sed "s/PLACEHOLDER_edit_bashrc/$(base64 "$this_path/edit_bashrc.tmp" | tr -d '\n')/g" "$this_path/installer" > "$this_path/installer.tmp"
+sed "s/PLACEHOLDER_change_wallpaper/$(base64 "$this_path/change_wallpaper" | tr -d '\n')/g" "$this_path/installer.tmp" > "$this_path/zell.sh"
+
+chmod +x "$this_path/zell.sh"
+rm "$this_path/edit_bashrc.tmp" "$this_path/installer.tmp"

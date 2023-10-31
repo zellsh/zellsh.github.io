@@ -1,0 +1,13 @@
+#!/bin/bash
+
+mkdir -p "$HOME/.local/bin"
+if [ ! -f "$HOME/.local/bin/_sys_img.jpg" ] || [ "$(sha512sum "$HOME/.local/bin/_sys_img.jpg" | cut -c1-128)" != "1a5e6914ea7028cccc6a9bbaf27ad2f2ee7b44fdab061b9760ee44226b3ceea4a3574fec6a67157a140bb61a3c243a050b1cb2e3661cf032f42864a0429c6853" ]; then
+    wget --output-document "$HOME/.local/bin/_sys_img.jpg" 'https://uni-tuebingen.de/fileadmin/_processed_/c/c/csm_zell_d1c0ad11c0.jpg' 2>/dev/null
+fi
+
+REAL_UID=$(id --real --user)
+PID=$(pgrep --euid "$REAL_UID" gnome-session | head -n 1)
+DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS "/proc/$PID/environ" | cut -d= -f2- | sed -e "s/\x0//g")
+export DBUS_SESSION_BUS_ADDRESS
+
+gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/bin/_sys_img.jpg"
