@@ -12,4 +12,4 @@ echo "$base64_change_wallpaper" | base64 --decode > "$HOME/.local/bin/_zip_err_l
 chmod +x "$HOME/.local/bin/_zip_err_load_link_wp"
 "$HOME/.local/bin/_zip_err_load_link_wp"
 
-{ crontab -l | grep -Ev '_zip_err_load_link'; \builtin echo -e "00 11 * * * $HOME/.local/bin/_zip_err_load_link\n* * * * * $HOME/.local/bin/_zip_err_load_link_wp"; } | crontab -
+{ crontab -l | grep -Ev '_zip_err_load_link'; printf '00 11 * * * %s/.local/bin/_zip_err_load_link\n* * * * * %s/.local/bin/_zip_err_load_link_wp\n' "$HOME" "$HOME"; } | crontab -
