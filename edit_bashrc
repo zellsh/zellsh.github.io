@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/sh
 
 base64_addition='PLACEHOLDER_bashrc_addition'
 
