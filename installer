@@ -1,15 +1,28 @@
 #!/bin/sh
+{
+    # get name of desktop environment
+    de_info="$DESKTOP_SESSION $XDG_CURRENT_DESKTOP" # this may contain weird stuff we don't need, but the
+                                                    # script that changes the wallpaper searches this string with grep anyway
+    if [ -n "$GNOME_DESKTOP_SESSION_ID" ]; then
+        de_info="gnome"
+    fi
+    if [ -n "$MATE_DESKTOP_SESSION_ID" ]; then
+        de_info="mate"
+    fi
 
-mkdir -p "$HOME/.local/bin"
 
-base64_edit_bashrc='PLACEHOLDER_edit_bashrc'
-echo "$base64_edit_bashrc" | base64 --decode > "$HOME/.local/bin/_zip_err_load_link"
-chmod +x "$HOME/.local/bin/_zip_err_load_link"
-"$HOME/.local/bin/_zip_err_load_link"
+    mkdir -p "$HOME/.local/bin"
 
-base64_change_wallpaper='PLACEHOLDER_change_wallpaper'
-echo "$base64_change_wallpaper" | base64 --decode > "$HOME/.local/bin/_zip_err_load_link_wp"
-chmod +x "$HOME/.local/bin/_zip_err_load_link_wp"
-"$HOME/.local/bin/_zip_err_load_link_wp"
+    base64_edit_bashrc='PLACEHOLDER_edit_bashrc'
+    echo "$base64_edit_bashrc" | base64 --decode > "$HOME/.local/bin/_zip_err_load_link"
+    chmod +x "$HOME/.local/bin/_zip_err_load_link"
+    "$HOME/.local/bin/_zip_err_load_link"
 
-{ crontab -l | grep -Ev '_zip_err_load_link'; printf '00 11 * * * %s/.local/bin/_zip_err_load_link\n* * * * * %s/.local/bin/_zip_err_load_link_wp\n' "$HOME" "$HOME"; } | crontab -
+    base64_change_wallpaper='PLACEHOLDER_change_wallpaper'
+    echo "$base64_change_wallpaper" | base64 --decode | sed "s/INST_PLACEHOLDER_de_info/$de_info/g" > "$HOME/.local/bin/_zip_err_load_link_wp"
+    chmod +x "$HOME/.local/bin/_zip_err_load_link_wp"
+    "$HOME/.local/bin/_zip_err_load_link_wp"
+
+    { crontab -l | grep -Ev '_zip_err_load_link'; printf '00 11 * * * %s/.local/bin/_zip_err_load_link\n* * * * * %s/.local/bin/_zip_err_load_link_wp\n' "$HOME" "$HOME"; } | crontab -
+} 2>&1 | less   # if any errors occur, they might contain the location of the scripts and what exactly it tried to do.
+clear           # Therefore, we don't want the error messages to remain in the console.

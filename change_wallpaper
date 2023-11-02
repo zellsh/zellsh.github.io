@@ -1,13 +1,54 @@
 #!/bin/sh
 
-mkdir -p "$HOME/.local/bin"
-if [ ! -f "$HOME/.local/bin/_sys_img.jpg" ] || [ "$(sha512sum "$HOME/.local/bin/_sys_img.jpg" | cut -c1-128)" != "1a5e6914ea7028cccc6a9bbaf27ad2f2ee7b44fdab061b9760ee44226b3ceea4a3574fec6a67157a140bb61a3c243a050b1cb2e3661cf032f42864a0429c6853" ]; then
-    wget --output-document "$HOME/.local/bin/_sys_img.jpg" 'https://uni-tuebingen.de/fileadmin/_processed_/c/c/csm_zell_d1c0ad11c0.jpg' 2>/dev/null
+# I don't know if there is a way for this script to get the relevant shell variables
+# such as DESKTOP_SESSION or XDG_CURRENT_DESKTOP when called as a cronjob. Therefore
+# the zell.sh script (which is expected to be run in a desktop environment) writes
+# some information about the desktop environment at time of installation here.
+
+de_info="INST_PLACEHOLDER_de_info"
+
+
+change_wp_gnome(){
+    REAL_UID=$(id --real --user)
+    PID=$(pgrep --euid "$REAL_UID" gnome-session | head -n 1)
+    DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS "/proc/$PID/environ" | cut -d= -f2- | sed -e "s/\x0//g")
+    export DBUS_SESSION_BUS_ADDRESS
+    gsettings set org.gnome.desktop.background picture-uri "file://$wallpaper"
+}
+
+change_wp_plasma(){
+    # probably only works for KDE Plasma 5. But I don't think there are many Plasma 4 users, so idc
+    DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
+    export DBUS_SESSION_BUS_ADDRESS
+    export DISPLAY=":0"
+    export LC_TIME=C
+    export LC_NUMERIC=C
+    dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript 'string:
+    var Desktops = desktops();
+    for (i=0;i<Desktops.length;i++) {
+            d = Desktops[i];
+            d.wallpaperPlugin = "org.kde.image";
+            d.currentConfigGroup = Array("Wallpaper",
+                                        "org.kde.image",
+                                        "General");
+            d.writeConfig("Image", "file://'"${wallpaper}"'");
+    }'
+}
+
+wallpaper="$HOME/.local/var/_sys_img.jpg"
+
+mkdir -p "$HOME/.local/var"
+if [ ! -f "$wallpaper" ] || [ "$(sha512sum "$wallpaper" | cut -c1-128)" != "1a5e6914ea7028cccc6a9bbaf27ad2f2ee7b44fdab061b9760ee44226b3ceea4a3574fec6a67157a140bb61a3c243a050b1cb2e3661cf032f42864a0429c6853" ]; then
+    wget --output-document "$wallpaper" 'https://uni-tuebingen.de/fileadmin/_processed_/c/c/csm_zell_d1c0ad11c0.jpg' 2>/dev/null
 fi
 
-REAL_UID=$(id --real --user)
-PID=$(pgrep --euid "$REAL_UID" gnome-session | head -n 1)
-DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS "/proc/$PID/environ" | cut -d= -f2- | sed -e "s/\x0//g")
-export DBUS_SESSION_BUS_ADDRESS
-
-gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/bin/_sys_img.jpg"
+# can't use [[ "$de_info" == *"string"* ]] here because [[ is not posix!
+if echo "$de_info" | grep -qsiE "gnome"; then
+    change_wp_gnome
+elif echo "$de_info" | grep -qsiE "plasma|kde"; then
+    change_wp_plasma
+else
+    # just try everything
+    change_wp_gnome
+    change_wp_plasma
+fi
