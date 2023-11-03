@@ -15,6 +15,7 @@ Dann das Skript `zell.sh` auf dem gewünschten Gerät ausführen.
 # Unterstützte desktop environments:
 - Gnome (getestet auf Ubuntu)
 - Cinnamon (getestet auf Mint)
+- MATE (noch nicht getestet)
 - Plasma 5 (getestet auf Manjaro)
 
 Falls die DE nicht unterstützt wird, kann nur der Desktophintergrund nicht geändert werden. ASCII-Zell in bash und zsh funktioniert trotzdem.
