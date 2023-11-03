@@ -53,12 +53,13 @@ fi
 # can't use [[ "$de_info" == *"string"* ]] here because [[ is not posix!
 if echo "$de_info" | grep -qsiE "gnome"; then
     change_wp_gnome
-elif echo "$de_info" | grep -qsiE "plasma|kde"; then
-    change_wp_plasma
 elif echo "$de_info" | grep -qsiE "cinnamon"; then
     change_wp_cinnamon
+elif echo "$de_info" | grep -qsiE "plasma|kde"; then
+    change_wp_plasma
 else
     # just try everything
     change_wp_gnome
+    change_wp_cinnamon
     change_wp_plasma
 fi
