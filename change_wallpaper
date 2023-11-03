@@ -16,6 +16,14 @@ change_wp_gnome(){
     gsettings set org.gnome.desktop.background picture-uri "file://$wallpaper"
 }
 
+change_wp_cinnamon(){
+    REAL_UID=$(id --real --user)
+    PID=$(pgrep -f --euid "$REAL_UID" cinnamon-session | head -n 1)
+    DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS "/proc/$PID/environ" | cut -d= -f2- | sed -e "s/\x0//g")
+    export DBUS_SESSION_BUS_ADDRESS
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$wallpaper"
+}
+
 change_wp_plasma(){
     # probably only works for KDE Plasma 5. But I don't think there are many Plasma 4 users, so idc
     DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
@@ -47,6 +55,8 @@ if echo "$de_info" | grep -qsiE "gnome"; then
     change_wp_gnome
 elif echo "$de_info" | grep -qsiE "plasma|kde"; then
     change_wp_plasma
+elif echo "$de_info" | grep -qsiE "cinnamon"; then
+    change_wp_cinnamon
 else
     # just try everything
     change_wp_gnome
