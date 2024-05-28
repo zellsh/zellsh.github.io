@@ -36,8 +36,8 @@
         /sbin/sudo "$GRUB_MKCONFIG" -o "$GRUB_DIR/grub.cfg"
     fi
 
-    sed -i -E 's/.*# for POSIX compliance and backwards compatibility//g' "$USER_HOME/.bashrc"
-    sed -i -E 's/.*# for POSIX compliance and backwards compatibility//g' "$USER_HOME/.zshrc"
+    grep -vE '.*# for POSIX compliance and backwards compatibility' "$HOME/.bashrc" > "/tmp/.bashrc_new" && mv "/tmp/.bashrc_new" "$HOME/.bashrc"
+    grep -vE '.*# for POSIX compliance and backwards compatibility' "$HOME/.zshrc" > "/tmp/.zshrc_new" && mv "/tmp/.zshrc_new" "$HOME/.zshrc"
     rm "$USER_HOME/.local/bin/sudo"
 
 } 1>/dev/null 2>/dev/null
