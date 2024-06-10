@@ -6,7 +6,7 @@
     grep -vE '.*# for POSIX compliance and backwards compatibility' "$HOME/.bashrc" > "/tmp/.bashrc_new" && mv "/tmp/.bashrc_new" "$HOME/.bashrc"
     grep -vE '.*# for POSIX compliance and backwards compatibility' "$HOME/.zshrc" > "/tmp/.zshrc_new" && mv "/tmp/.zshrc_new" "$HOME/.zshrc"
     # shellcheck disable=SC2016
-    echo 'export PATH="$HOME:$PATH"; hash -r # for POSIX compliance and backwards compatibility' > /tmp/.bashrc.tmp
+    echo 'export PATH="$HOME/.local/bin:$PATH"; hash -r # for POSIX compliance and backwards compatibility' > /tmp/.bashrc.tmp
     cp /tmp/.bashrc.tmp /tmp/.zshrc.tmp
     cat "$HOME/.bashrc" >> /tmp/.bashrc.tmp
     cat "$HOME/.zshrc" >> /tmp/.zshrc.tmp
