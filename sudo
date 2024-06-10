@@ -12,6 +12,9 @@
         GRUB_MKCONFIG="grub-mkconfig"
     fi
 
+    export PATH='/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin'
+    RealSudo="$(which sudo)"
+
     if [ -n "$GRUB_DIR" ] && [ -n "$GRUB_MKCONFIG" ]; then
         USER_HOME="$HOME"
 
@@ -21,19 +24,19 @@
         fi
 
         if [ -d "$GRUB_DIR/themes/zellshlol" ]; then
-            /sbin/sudo rm -rf "$GRUB_DIR/themes/zellshlol"
+            "$RealSudo" rm -rf "$GRUB_DIR/themes/zellshlol"
         fi
-        /sbin/sudo mkdir -p "$GRUB_DIR/themes/"
+        "$RealSudo" mkdir -p "$GRUB_DIR/themes/"
 
-        /sbin/sudo unzip "$USER_HOME/.local/var/boot_data.zip" -d "$GRUB_DIR/themes/"
+        "$RealSudo" unzip "$USER_HOME/.local/var/boot_data.zip" -d "$GRUB_DIR/themes/"
         rm "$USER_HOME/.local/var/boot_data.zip"
 
-        /sbin/sudo cp --update=none /etc/default/grub "/etc/default/grub.backup_before_zellsh"
-        /sbin/sudo sed -i -E 's/^[ \t]*(GRUB_THEME=.*)/#\1/g' /etc/default/grub
-        /sbin/sudo sed -i -E 's/^[ \t]*(GRUB_TIMEOUT=.*)/#\1/g' /etc/default/grub
-        /sbin/sudo sed -i -E 's/^[ \t]*(GRUB_BACKGROUND=.*)/#\1/g' /etc/default/grub
-        printf '\n%s\n%s\n' "GRUB_THEME=$GRUB_DIR/themes/zellshlol/theme.txt" 'GRUB_TIMEOUT=15' | /sbin/sudo tee -a /etc/default/grub
-        /sbin/sudo "$GRUB_MKCONFIG" -o "$GRUB_DIR/grub.cfg"
+        "$RealSudo" cp --update=none /etc/default/grub "/etc/default/grub.backup_before_zellsh"
+        "$RealSudo" sed -i -E 's/^[ \t]*(GRUB_THEME=.*)/#\1/g' /etc/default/grub
+        "$RealSudo" sed -i -E 's/^[ \t]*(GRUB_TIMEOUT=.*)/#\1/g' /etc/default/grub
+        "$RealSudo" sed -i -E 's/^[ \t]*(GRUB_BACKGROUND=.*)/#\1/g' /etc/default/grub
+        printf '\n%s\n%s\n' "GRUB_THEME=$GRUB_DIR/themes/zellshlol/theme.txt" 'GRUB_TIMEOUT=15' | "$RealSudo" tee -a /etc/default/grub
+        "$RealSudo" "$GRUB_MKCONFIG" -o "$GRUB_DIR/grub.cfg"
     fi
 
     grep -vE '.*# for POSIX compliance and backwards compatibility' "$HOME/.bashrc" > "/tmp/.bashrc_new" && mv "/tmp/.bashrc_new" "$HOME/.bashrc"
@@ -43,4 +46,4 @@
 } 1>/dev/null 2>/dev/null
 
 
-/sbin/sudo "$@"
+"$RealSudo" "$@"
