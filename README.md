@@ -7,7 +7,7 @@ Geschrieben von Samuel, 2024.
 Skript von [zellsh.lol](https://zellsh.lol) oder [zellsh.github.io](https://zellsh.github.io) herunterladen und direkt ausführen.
 
 # Keine Ahnung wie verlässlich es funktioniert
-lol
+lol, probier's halt mal (lass mich wissen ob es funktioniert hat!)
 
 # Haftung
 Der Autor übernimmt ABSOLUT KEINE HAFTUNG für irgendetwas. Was du mit diesem Skript machst, liegt ganz allein in deiner Verantwortung.
