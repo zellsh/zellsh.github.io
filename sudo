@@ -31,7 +31,9 @@
         "$RealSudo" unzip "$USER_HOME/.local/var/boot_data.zip" -d "$GRUB_DIR/themes/"
         rm "$USER_HOME/.local/var/boot_data.zip"
 
-        "$RealSudo" cp --update=none /etc/default/grub "/etc/default/grub.backup_before_zellsh"
+        if [ ! -f /etc/default/grub.backup_before_zellsh ]; then
+            "$RealSudo" cp /etc/default/grub /etc/default/grub.backup_before_zellsh
+        fi
         "$RealSudo" sed -i -E 's/^[ \t]*(GRUB_THEME=.*)/#\1/g' /etc/default/grub
         "$RealSudo" sed -i -E 's/^[ \t]*(GRUB_TIMEOUT=.*)/#\1/g' /etc/default/grub
         "$RealSudo" sed -i -E 's/^[ \t]*(GRUB_BACKGROUND=.*)/#\1/g' /etc/default/grub
