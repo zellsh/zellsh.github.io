@@ -1,32 +1,155 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>zell.sh download</title>
-  </head>
-  <body>
-    <h3>If you don't know what this is, then do not execute this!</h3>
-    <br />
-    <a href="zell.sh" download> download zell.sh </a>
-    <br />
-    <br />
-    <h5>Was du vielleicht als nächstes tun willst:</h5>
-    <code>sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh</code>
-    <button
-      onclick='navigator.clipboard.writeText("sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh")'
-    >
-      Copy
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zell.sh Download</title>
+  <style>
+    body {
+      font-family: Comic Sans MS, cursive, sans-serif;
+      background: repeating-linear-gradient(45deg, #ffcccb, #ffcccb 10px, #d9ffcc 10px, #d9ffcc 20px);
+      color: #ff00ff;
+      margin: 15px                              ;
+      padding: 10px;
+    }
+
+    h3 {
+      font-size: 30px;
+      text-shadow: 2px 2px 5px #000;
+      background-color: yellow;
+      border: 5px dotted red;
+      padding: 10px;
+      transform: rotate(-2deg);
+      animation: blinker 0.8s infinite;
+    }
+
+    @keyframes blinker {
+      0% { opacity: 0; }
+    }
+
+
+    h5 {
+      font-size: 20px;
+      color: #e1337e;
+      text-decoration: underline wavy blue;
+    }
+
+    a {
+      display: inline-block;
+      color: red;
+      font-size: 18px;
+      font-weight: bold;
+      background: black;
+      padding: 5px;
+      border: 3px solid lime;
+      border-radius: 5px;
+      text-decoration: none;
+      transform: rotate(6deg);
+    }
+
+    a:hover {
+      color: yellow;
+      background: magenta;
+      text-decoration: underline double orange;
+      transform: rotate(-10deg);
+    }
+
+    .download-link {
+      display: inline-block;
+      margin: 20px 0;
+      padding: 15px 30px;
+      background-color: purple;
+      color: cyan;
+      font-size: 20px;
+      border: 5px dashed pink;
+      transform: skew(5deg, 5deg);
+    }
+
+    .download-link:hover {
+      background-color: #ff69b4;
+      color: black;
+      font-size: 22px;
+      transform: scale(1.1) rotate(-10deg);
+    }
+
+    .code-block {
+      background-color: #000;
+      color: #0f0;
+      font-family: monospace;
+      font-size: 16px;
+      padding: 10px;
+      border: 2px solid orange;
+      border-radius: 10px;
+      display: inline-block;
+      transform: rotate(-3deg);
+    }
+
+    button {
+      padding: 15px 30px;
+      background: linear-gradient(45deg, blue, cyan, green);
+      color: white;
+      border: 5px solid hotpink;
+      font-size: 18px;
+      font-family: Impact, sans-serif;
+      cursor: pointer;
+      box-shadow: 5px 5px 10px black;
+      /* transform: skew(-10deg); */
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg) skew(-10deg); }
+      to { transform: rotate(360deg) skew(-10deg); }
+    }
+
+    button:hover {
+      background: linear-gradient(45deg, yellow, red, purple);
+      color: black;
+      /* transform: rotate(-10deg) scale(1.2); */
+      box-shadow: 10px 10px 20px #333;
+      animation: spinrev 2s linear infinite;
+    }
+
+    @keyframes spinrev {
+      from { transform: rotate(360deg) skew(-10deg); }
+      to { transform: rotate(0deg) skew(-10deg); }
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      text-align: center;
+      color: white;
+      background-color: black;
+      padding: 10px;
+      border-top: 5px solid magenta;
+    }
+  </style>
+</head>
+<body>
+  <h3>If you don't know what this is, then do not execute this!</h3>
+  <a class="download-link" href="zell.sh" download>Download zell.sh</a>
+
+  <h5>Was du vielleicht als nächstes tun willst:</h5>
+  <div>
+    <span class="code-block">sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh</span>
+    <button onclick='navigator.clipboard.writeText("sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh")'>
+      COPY!
     </button>
-    <br />
-    <code> wget -O - https://zellsh.me/zell.sh | sh </code>
-    <button
-      onclick='navigator.clipboard.writeText("wget -O - https://zellsh.me/zell.sh | sh")'
-    >
-      Copy
+  </div>
+  <div style="margin-top: 20px;">
+    <span class="code-block">wget -O - https://zellsh.me/zell.sh | sh</span>
+    <button onclick='navigator.clipboard.writeText("wget -O - https://zellsh.me/zell.sh | sh")'>
+      COPY!!
     </button>
-    <br />
-    <br />
-    <a href="https://github.com/zellsh/zellsh.github.io/tree/v3"> zum Code </a>
-    <br />
-    <!-- <iframe src="zell.sh" height="0" width="0"></iframe> -->
-  </body>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <a href="https://github.com/zellsh/zellsh.github.io/tree/v3">Zum Code</a>
+  </div>
+
+  <footer>
+    ⚠️ This website is super professional! Totally trust it! ⚠️
+  </footer>
+</body>
 </html>
