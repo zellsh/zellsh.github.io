@@ -1,15 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zell.sh Download</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zell.sh Download</title>
+  </head>
+
+  <body>
+
+    <h3>If you don't know what this is, then do not execute this!</h3>
+    <a class="download-link" href="zell.sh" download>Download zell.sh</a>
+
+    <h5>Was du vielleicht als nächstes tun willst:</h5>
+    <div>
+      <span class="code-block"
+        >sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh</span
+      >
+      <button
+        class="copy-button"
+        onclick='navigator.clipboard.writeText("sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh")'
+      >
+        COPY!
+      </button>
+    </div>
+    <div style="margin-top: 20px">
+      <span class="code-block">wget -O - https://zellsh.me/zell.sh | sh</span>
+      <button
+        class="copy-button"
+        onclick='navigator.clipboard.writeText("wget -O - https://zellsh.me/zell.sh | sh")'
+      >
+        COPY!!
+      </button>
+    </div>
+
+    <div style="margin-top: 30px">
+      <a href="https://github.com/zellsh/zellsh.github.io/tree/v3">Zum Code</a>
+    </div>
+
+
+
+
+    <!-- I don't know shit about html or js so I stole the rickroll stuff from Maurice Kühl (https://github.com/mauricekuehl/rickroll)
+
+    MIT License
+
+    Copyright (c) 2022 Maurice Kühl
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE. -->
+
+    <div class="uninstaller-div">
+      <button class="uninstaller-button">Get the Uninstaller!</button>
+    </div>
+    <div id="player"></div>
+    <script>
+      var tag = document.createElement("script");
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          videoId: "uHgt8giw1LY",
+          playerVars: {
+            playsinline: 1,
+            controls: 0,
+          },
+          events: {
+            onReady: onPlayerReady,
+          },
+        });
+      }
+
+      let toPlay = false;
+      document
+        .querySelector(".uninstaller-div")
+        .addEventListener("click", () => {
+          toPlay = true;
+        });
+
+      function onPlayerReady(event) {
+        if (toPlay) {
+          play(event);
+        }
+        document
+          .querySelector(".uninstaller-div")
+          .addEventListener("click", () => {
+            play(event);
+          });
+      }
+      function play(event) {
+        document.querySelector("#player").style.display = "block";
+        event.target.playVideo();
+      }
+    </script>
+
+    <!-- End of MIT License, nobody else but me is to blame for the horrors below this line -->
+
+
+
+    <footer>⚠️ This website is super professional! Totally trust it! ⚠️</footer>
+  </body>
+
   <style>
     body {
       font-family: Comic Sans MS, cursive, sans-serif;
-      background: repeating-linear-gradient(45deg, #ffcccb, #ffcccb 10px, #d9ffcc 10px, #d9ffcc 20px);
+      background: repeating-linear-gradient(
+        45deg,
+        #ffcccb,
+        #ffcccb 10px,
+        #d9ffcc 10px,
+        #d9ffcc 20px
+      );
       color: #ff00ff;
-      margin: 15px                              ;
+      margin: 15px;
       padding: 10px;
     }
 
@@ -23,9 +144,10 @@
     }
 
     @keyframes blinker {
-      0% { opacity: 0; }
+      0% {
+        opacity: 0;
+      }
     }
-
 
     h5 {
       font-size: 20px;
@@ -84,7 +206,7 @@
       transform: rotate(-3deg);
     }
 
-    button {
+    .copy-button {
       padding: 15px 30px;
       background: linear-gradient(45deg, blue, cyan, green);
       color: white;
@@ -93,26 +215,32 @@
       font-family: Impact, sans-serif;
       cursor: pointer;
       box-shadow: 5px 5px 10px black;
-      /* transform: skew(-10deg); */
       animation: spin 2s linear infinite;
     }
 
     @keyframes spin {
-      from { transform: rotate(0deg) skew(-10deg); }
-      to { transform: rotate(360deg) skew(-10deg); }
+      from {
+        transform: rotate(0deg) skew(-10deg);
+      }
+      to {
+        transform: rotate(360deg) skew(-10deg);
+      }
     }
 
-    button:hover {
+    .copy-button:hover {
       background: linear-gradient(45deg, yellow, red, purple);
       color: black;
-      /* transform: rotate(-10deg) scale(1.2); */
       box-shadow: 10px 10px 20px #333;
       animation: spinrev 2s linear infinite;
     }
 
     @keyframes spinrev {
-      from { transform: rotate(360deg) skew(-10deg); }
-      to { transform: rotate(0deg) skew(-10deg); }
+      from {
+        transform: rotate(360deg) skew(-10deg);
+      }
+      to {
+        transform: rotate(0deg) skew(-10deg);
+      }
     }
 
     footer {
@@ -125,7 +253,7 @@
       border-top: 5px solid magenta;
     }
 
-    .uninstaller-link {
+    .uninstaller-button {
       background-color: #ff4500;
       color: #ffffff;
       font-size: 24px;
@@ -134,52 +262,36 @@
       border-radius: 20px;
       text-decoration: none;
       display: inline-block;
-      margin-top: 30px;
-      margin-left: 70px;
+      margin-top: 70px;
+      margin-left: 50px;
       font-weight: bold;
       box-shadow: 10px 10px 20px #000;
       transform: rotate(10deg);
       text-shadow: 2px 2px 3px #00ff00;
+      font-family: Comic Sans MS, cursive, sans-serif;
+      cursor: pointer;
     }
 
-    .uninstaller-link:hover {
+    .uninstaller-button:hover {
+      margin-left: 70px;
       background-color: #ff1493;
       color: black;
-      transform: scale(1.5) rotate(6deg);
+      transform: scale(1.5) rotate(4deg);
       box-shadow: 0 0 20px 10px rgba(255, 69, 0, 0.8);
       text-decoration: underline;
       text-shadow: 3px 3px 3px #ffffff;
     }
+
+    #player {
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      z-index: 50;
+      position: absolute;
+      top: 0;
+    }
+    iframe {
+      pointer-events: none;
+    }
   </style>
-</head>
-<body>
-  <h3>If you don't know what this is, then do not execute this!</h3>
-  <a class="download-link" href="zell.sh" download>Download zell.sh</a>
-
-  <h5>Was du vielleicht als nächstes tun willst:</h5>
-  <div>
-    <span class="code-block">sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh</span>
-    <button onclick='navigator.clipboard.writeText("sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh")'>
-      COPY!
-    </button>
-  </div>
-  <div style="margin-top: 20px;">
-    <span class="code-block">wget -O - https://zellsh.me/zell.sh | sh</span>
-    <button onclick='navigator.clipboard.writeText("wget -O - https://zellsh.me/zell.sh | sh")'>
-      COPY!!
-    </button>
-  </div>
-
-  <div style="margin-top: 30px;">
-    <a href="https://github.com/zellsh/zellsh.github.io/tree/v3">Zum Code</a>
-  </div>
-
-  <div style="margin-top: 40px;">
-    <a class="uninstaller-link" href="https://uninstaller.zellsh.me" download>Download the Uninstaller!</a>
-  </div>
-
-  <footer>
-    ⚠️ This website is super professional! Totally trust it! ⚠️
-  </footer>
-</body>
 </html>
