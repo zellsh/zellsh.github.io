@@ -83,4 +83,12 @@ alias su=zell	# Viel Spass mit Zell!
 alias grep=zell	# Viel Spass mit Zell!
 alias ssh=zell	# Viel Spass mit Zell!
 alias clear=zell	# Viel Spass mit Zell!
+alias open=zell	# Viel Spass mit Zell!
+alias pwd=zell	# Viel Spass mit Zell!
+alias mkdir=zell	# Viel Spass mit Zell!
+alias rmdir=zell	# Viel Spass mit Zell!
+alias touch=zell	# Viel Spass mit Zell!
+
+alias unalias=zell	# Viel Spass mit Zell!
+alias alias=zell	# Viel Spass mit Zell!
 zell	# Viel Spass mit Zell!

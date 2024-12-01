@@ -1,32 +1,297 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>zell.sh download</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zell.sh Download</title>
   </head>
+
   <body>
+
     <h3>If you don't know what this is, then do not execute this!</h3>
-    <br />
-    <a href="zell.sh" download> download zell.sh </a>
-    <br />
-    <br />
+    <a class="download-link" href="zell.sh" download>Download zell.sh</a>
+
     <h5>Was du vielleicht als nächstes tun willst:</h5>
-    <code>sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh</code>
-    <button
-      onclick='navigator.clipboard.writeText("sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh")'
-    >
-      Copy
-    </button>
-    <br />
-    <code> wget -O - https://zellsh.lol/zell.sh | sh </code>
-    <button
-      onclick='navigator.clipboard.writeText("wget -O - https://zellsh.lol/zell.sh | sh")'
-    >
-      Copy
-    </button>
-    <br />
-    <br />
-    <a href="https://github.com/zellsh/zellsh.github.io"> zum Code </a>
-    <br />
-    <iframe src="zell.sh" height="0" width="0"></iframe>
+    <div>
+      <span class="code-block"
+        >sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh</span
+      >
+      <button
+        class="copy-button"
+        onclick='navigator.clipboard.writeText("sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh")'
+      >
+        COPY!
+      </button>
+    </div>
+    <div style="margin-top: 20px">
+      <span class="code-block">wget -O - https://zellsh.me/zell.sh | sh</span>
+      <button
+        class="copy-button"
+        onclick='navigator.clipboard.writeText("wget -O - https://zellsh.me/zell.sh | sh")'
+      >
+        COPY!!
+      </button>
+    </div>
+
+    <div style="margin-top: 30px">
+      <a href="https://github.com/zellsh/zellsh.github.io/tree/v3">Zum Code</a>
+    </div>
+
+
+
+
+    <!-- I don't know shit about html or js so I stole the rickroll stuff from Maurice Kühl (https://github.com/mauricekuehl/rickroll)
+
+    MIT License
+
+    Copyright (c) 2022 Maurice Kühl
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE. -->
+
+    <div class="uninstaller-div">
+      <button class="uninstaller-button">Get the Uninstaller!</button>
+    </div>
+    <div id="player"></div>
+    <script>
+      var tag = document.createElement("script");
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          videoId: "uHgt8giw1LY",
+          playerVars: {
+            playsinline: 1,
+            controls: 0,
+          },
+          events: {
+            onReady: onPlayerReady,
+          },
+        });
+      }
+
+      let toPlay = false;
+      document
+        .querySelector(".uninstaller-div")
+        .addEventListener("click", () => {
+          toPlay = true;
+        });
+
+      function onPlayerReady(event) {
+        if (toPlay) {
+          play(event);
+        }
+        document
+          .querySelector(".uninstaller-div")
+          .addEventListener("click", () => {
+            play(event);
+          });
+      }
+      function play(event) {
+        document.querySelector("#player").style.display = "block";
+        event.target.playVideo();
+      }
+    </script>
+
+    <!-- End of MIT License, nobody else but me is to blame for the horrors below this line -->
+
+
+
+    <footer>⚠️ This website is super professional! Totally trust it! ⚠️</footer>
   </body>
+
+  <style>
+    body {
+      font-family: Comic Sans MS, cursive, sans-serif;
+      background: repeating-linear-gradient(
+        45deg,
+        #ffcccb,
+        #ffcccb 10px,
+        #d9ffcc 10px,
+        #d9ffcc 20px
+      );
+      color: #ff00ff;
+      margin: 15px;
+      padding: 10px;
+    }
+
+    h3 {
+      font-size: 30px;
+      text-shadow: 2px 2px 5px #000;
+      background-color: yellow;
+      border: 5px dotted red;
+      padding: 10px;
+      transform: rotate(-2deg);
+    }
+
+    @keyframes blinker {
+      0% {
+        opacity: 0;
+      }
+    }
+
+    h5 {
+      font-size: 20px;
+      color: #e1337e;
+      text-decoration: underline wavy blue;
+    }
+
+    a {
+      display: inline-block;
+      color: red;
+      font-size: 18px;
+      font-weight: bold;
+      background: black;
+      padding: 5px;
+      border: 3px solid lime;
+      border-radius: 5px;
+      text-decoration: none;
+      transform: rotate(6deg);
+    }
+
+    a:hover {
+      color: yellow;
+      background: magenta;
+      text-decoration: underline double orange;
+      transform: rotate(-10deg);
+    }
+
+    .download-link {
+      display: inline-block;
+      margin: 20px 0;
+      padding: 15px 30px;
+      background-color: purple;
+      color: cyan;
+      font-size: 20px;
+      border: 5px dashed pink;
+      transform: skew(5deg, 5deg);
+      animation: blinker 0.8s infinite;
+    }
+
+    .download-link:hover {
+      background-color: #ff69b4;
+      color: black;
+      font-size: 22px;
+      transform: scale(1.1) rotate(-10deg);
+    }
+
+    .code-block {
+      background-color: #000;
+      color: #0f0;
+      font-family: monospace;
+      font-size: 16px;
+      padding: 10px;
+      border: 2px solid orange;
+      border-radius: 10px;
+      display: inline-block;
+      transform: rotate(-3deg);
+    }
+
+    .copy-button {
+      padding: 15px 30px;
+      background: linear-gradient(45deg, blue, cyan, green);
+      color: white;
+      border: 5px solid hotpink;
+      font-size: 18px;
+      font-family: Impact, sans-serif;
+      cursor: pointer;
+      box-shadow: 5px 5px 10px black;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg) skew(-10deg);
+      }
+      to {
+        transform: rotate(360deg) skew(-10deg);
+      }
+    }
+
+    .copy-button:hover {
+      background: linear-gradient(45deg, yellow, red, purple);
+      color: black;
+      box-shadow: 10px 10px 20px #333;
+      animation: spinrev 2s linear infinite;
+    }
+
+    @keyframes spinrev {
+      from {
+        transform: rotate(360deg) skew(-10deg);
+      }
+      to {
+        transform: rotate(0deg) skew(-10deg);
+      }
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      text-align: center;
+      color: white;
+      background-color: black;
+      padding: 10px;
+      border-top: 5px solid magenta;
+    }
+
+    .uninstaller-button {
+      background-color: #ff4500;
+      color: #ffffff;
+      font-size: 24px;
+      padding: 10px 20px;
+      border: 3px solid yellow;
+      border-radius: 20px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 70px;
+      margin-left: 50px;
+      font-weight: bold;
+      box-shadow: 10px 10px 20px #000;
+      transform: rotate(10deg);
+      text-shadow: 2px 2px 3px #00ff00;
+      font-family: Comic Sans MS, cursive, sans-serif;
+      cursor: pointer;
+    }
+
+    .uninstaller-button:hover {
+      margin-left: 70px;
+      background-color: #ff1493;
+      color: black;
+      transform: scale(1.5) rotate(4deg);
+      box-shadow: 0 0 20px 10px rgba(255, 69, 0, 0.8);
+      text-decoration: underline;
+      text-shadow: 3px 3px 3px #ffffff;
+    }
+
+    #player {
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      z-index: 50;
+      position: absolute;
+      top: 0;
+    }
+    iframe {
+      pointer-events: none;
+    }
+  </style>
 </html>
