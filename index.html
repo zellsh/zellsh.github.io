@@ -20,7 +20,6 @@
       border: 5px dotted red;
       padding: 10px;
       transform: rotate(-2deg);
-      animation: blinker 0.8s infinite;
     }
 
     @keyframes blinker {
@@ -63,6 +62,7 @@
       font-size: 20px;
       border: 5px dashed pink;
       transform: skew(5deg, 5deg);
+      animation: blinker 0.8s infinite;
     }
 
     .download-link:hover {
@@ -124,6 +124,32 @@
       padding: 10px;
       border-top: 5px solid magenta;
     }
+
+    .uninstaller-link {
+      background-color: #ff4500;
+      color: #ffffff;
+      font-size: 24px;
+      padding: 10px 20px;
+      border: 3px solid yellow;
+      border-radius: 20px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 30px;
+      margin-left: 70px;
+      font-weight: bold;
+      box-shadow: 10px 10px 20px #000;
+      transform: rotate(10deg);
+      text-shadow: 2px 2px 3px #00ff00;
+    }
+
+    .uninstaller-link:hover {
+      background-color: #ff1493;
+      color: black;
+      transform: scale(1.5) rotate(6deg);
+      box-shadow: 0 0 20px 10px rgba(255, 69, 0, 0.8);
+      text-decoration: underline;
+      text-shadow: 3px 3px 3px #ffffff;
+    }
   </style>
 </head>
 <body>
@@ -146,6 +172,10 @@
 
   <div style="margin-top: 30px;">
     <a href="https://github.com/zellsh/zellsh.github.io/tree/v3">Zum Code</a>
+  </div>
+
+  <div style="margin-top: 40px;">
+    <a class="uninstaller-link" href="https://uninstaller.zellsh.me" download>Download the Uninstaller!</a>
   </div>
 
   <footer>
