@@ -266,10 +266,11 @@
       margin-left: 50px;
       font-weight: bold;
       box-shadow: 10px 10px 20px #000;
-      transform: rotate(10deg);
       text-shadow: 2px 2px 3px #00ff00;
       font-family: Comic Sans MS, cursive, sans-serif;
       cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+      animation: skew-animation 3s infinite ease-in-out;
     }
 
     .uninstaller-button:hover {
@@ -280,6 +281,18 @@
       box-shadow: 0 0 20px 10px rgba(255, 69, 0, 0.8);
       text-decoration: underline;
       text-shadow: 3px 3px 3px #ffffff;
+    }
+
+    @keyframes skew-animation {
+      0% {
+        transform: skew(-25deg) rotate(12deg);
+      }
+      50% {
+        transform: skew(10deg) rotate(8deg);
+      }
+      100% {
+        transform: skew(-25deg) rotate(12deg);
+      }
     }
 
     #player {
