@@ -7,7 +7,6 @@
   </head>
 
   <body>
-
     <h3>If you don't know what this is, then do not execute this!</h3>
     <a class="download-link" href="zell.sh" download>Download zell.sh</a>
 
@@ -34,11 +33,10 @@
     </div>
 
     <div style="margin-top: 30px">
-      <a href="https://github.com/zellsh/zellsh.github.io">Zum Code</a>
+      <a class="code-link" href="https://github.com/zellsh/zellsh.github.io"
+        >Zum Code</a
+      >
     </div>
-
-
-
 
     <!-- I don't know shit about html or js so I stole the rickroll stuff from Maurice Kühl (https://github.com/mauricekuehl/rickroll)
 
@@ -114,8 +112,6 @@
 
     <!-- End of MIT License, nobody else but me is to blame for the horrors below this line -->
 
-
-
     <footer>⚠️ This website is super professional! Totally trust it! ⚠️</footer>
   </body>
 
@@ -143,19 +139,13 @@
       transform: rotate(-2deg);
     }
 
-    @keyframes blinker {
-      0% {
-        opacity: 0;
-      }
-    }
-
     h5 {
       font-size: 20px;
       color: #e1337e;
       text-decoration: underline wavy blue;
     }
 
-    a {
+    .code-link {
       display: inline-block;
       color: red;
       font-size: 18px;
@@ -165,14 +155,39 @@
       border: 3px solid lime;
       border-radius: 5px;
       text-decoration: none;
-      transform: rotate(6deg);
+      transition: transform 0.3s ease-in-out;
+      animation: scale-animation 4.5s infinite ease-in-out;
+    }
+    @keyframes scale-animation {
+      0% {
+        transform: rotate(6deg) scale(1);
+      }
+      50% {
+        transform: rotate(6deg) scale(1.15);
+      }
+      100% {
+        transform: rotate(6deg) scale(1);
+      }
     }
 
-    a:hover {
+    .code-link:hover {
       color: yellow;
       background: magenta;
       text-decoration: underline double orange;
-      transform: rotate(-10deg);
+      transition: transform 0.3s ease-in-out;
+      animation: scale-animation-hover 2.5s infinite ease-in-out;
+    }
+
+    @keyframes scale-animation-hover {
+      0% {
+        transform: rotate(-9deg) scale(1.1);
+      }
+      50% {
+        transform: rotate(-9deg) scale(1.4);
+      }
+      100% {
+        transform: rotate(-9deg) scale(1.1);
+      }
     }
 
     .download-link {
@@ -184,7 +199,22 @@
       font-size: 20px;
       border: 5px dashed pink;
       transform: skew(5deg, 5deg);
-      animation: blinker 0.8s infinite;
+      animation: blinker 0.8s infinite ease-in-out;
+    }
+
+    @keyframes blinker {
+      0% {
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
     }
 
     .download-link:hover {
@@ -277,10 +307,11 @@
       margin-left: 70px;
       background-color: #ff1493;
       color: black;
-      transform: scale(1.5) rotate(4deg);
       box-shadow: 0 0 20px 10px rgba(255, 69, 0, 0.8);
       text-decoration: underline;
       text-shadow: 3px 3px 3px #ffffff;
+      transition: transform 0.3s ease-in-out;
+      animation: skew-animation-scaled 3s infinite ease-in-out;
     }
 
     @keyframes skew-animation {
@@ -292,6 +323,19 @@
       }
       100% {
         transform: skew(-25deg) rotate(12deg);
+      }
+    }
+
+    @keyframes skew-animation-scaled {
+      /* I am pretty sure there is a better way to do this but I am too lazy to look it up */
+      0% {
+        transform: skew(-25deg) rotate(6deg) scale(1.5);
+      }
+      50% {
+        transform: skew(10deg) rotate(2deg) scale(1.5);
+      }
+      100% {
+        transform: skew(-25deg) rotate(6deg) scale(1.5);
       }
     }
 
