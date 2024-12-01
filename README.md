@@ -4,7 +4,7 @@ Geschrieben von Samuel, mit Hilfe und Ideen von einigen anderen netten Leuten, 2
 
 # Nutzung
 ## Wenn's schnell gehen muss:
-Skript von [zellsh.lol](https://zellsh.lol) oder [zellsh.github.io](https://zellsh.github.io) herunterladen und direkt ausführen.
+Skript von [zellsh.me](https://zellsh.me) oder [zellsh.github.io](https://zellsh.github.io) herunterladen und direkt ausführen.
 
 ## Alternativ:
 Falls gewünscht die Dateien `bashrc_addition`, `change_wallpaper`, `edit_bashrc` oder `installer` bearbeiten.
