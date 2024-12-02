@@ -10,7 +10,7 @@
     <h3>If you don't know what this is, then do not execute this!!!1!</h3>
     <a class="download-link" href="zell.sh" download>Download zell.sh</a>
 
-    <h5>Was du vielleicht als nächstes tun willst:</h5>
+    <h5>Hilfreiche Befehle zum copy-pasten:</h5>
     <div>
       <span class="code-block"
         >sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh</span
@@ -32,7 +32,7 @@
       </button>
     </div>
 
-    <div style="margin-top: 30px">
+    <div style="margin-top: 40px">
       <a class="code-link" href="https://github.com/zellsh/zellsh.github.io"
         >Zum Code</a
       >
@@ -143,7 +143,7 @@
     body {
       font-family: Comic Sans MS, cursive, sans-serif;
       background: repeating-linear-gradient(
-        45deg,
+        420deg,
         #ffcccb,
         #ffcccb 10px,
         #d9ffcc 10px,
@@ -166,17 +166,16 @@
     h5 {
       font-size: 20px;
       color: #e1337e;
-      text-decoration: underline wavy blue;
+      text-decoration: underline wavy #42a8ff;
+      transform: rotate(1deg);
     }
 
     .code-link {
       display: inline-block;
-      color: red;
       font-size: 18px;
       font-weight: bold;
       background: black;
       padding: 5px;
-      border: 3px solid lime;
       border-radius: 5px;
       text-decoration: none;
       transition: transform 0.3s ease-in-out;
@@ -185,12 +184,24 @@
     @keyframes scale-animation {
       0% {
         transform: rotate(6deg) scale(1);
+        border: 5px solid #00ff00;
+        color: #ff00ff;
+      }
+      33%{
+        border: 5px solid #0000ff;
+        color: #ffff00;
       }
       50% {
         transform: rotate(6deg) scale(1.15);
       }
+      67% {
+        border: 5px solid #ff0000;
+        color: #00ffff;
+      }
       100% {
         transform: rotate(6deg) scale(1);
+        border: 5px solid #00ff00;
+        color: #ff00ff;
       }
     }
 
@@ -199,18 +210,21 @@
       background: magenta;
       text-decoration: underline double orange;
       transition: transform 0.3s ease-in-out;
-      animation: scale-animation-hover 2.5s infinite ease-in-out;
+      animation: scale-animation-hover 1.5s infinite ease-in-out;
     }
 
     @keyframes scale-animation-hover {
       0% {
         transform: rotate(-9deg) scale(1.1);
+        border: 5px solid #ff00ff;
       }
       50% {
         transform: rotate(-9deg) scale(1.4);
+        border: 5px solid #000000;
       }
       100% {
         transform: rotate(-9deg) scale(1.1);
+        border: 5px solid #ff00ff;
       }
     }
 
@@ -224,6 +238,7 @@
       border: 5px dashed pink;
       transform: skew(5deg, 5deg);
       animation: blinker 0.8s infinite ease-in-out;
+      box-shadow: -10px 8px 10px #000;
     }
 
     @keyframes blinker {
