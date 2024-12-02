@@ -12,9 +12,7 @@
 
     <h5>Hilfreiche Befehle zum copy-pasten:</h5>
     <div>
-      <span class="code-block"
-        >sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh</span
-      >
+      <input type="text" class="code-block" readonly="true" size="48" value="sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh">
       <button
         class="copy-button"
         onclick='navigator.clipboard.writeText("sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh")'
@@ -23,7 +21,7 @@
       </button>
     </div>
     <div style="margin-top: 20px">
-      <span class="code-block">wget -O - https://zellsh.me/zell.sh | sh</span>
+      <input type="text" class="code-block" readonly="true" size="48" value="wget -O - https://zellsh.me/zell.sh | sh">
       <button
         class="copy-button"
         onclick='navigator.clipboard.writeText("wget -O - https://zellsh.me/zell.sh | sh")'
