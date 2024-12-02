@@ -114,7 +114,7 @@
 
     <!-- End of MIT License, nobody else but me is to blame for the horrors below this line -->
 
-    <footer id="footer-id">⚠️ This website is super professional! Totally trust it! ⚠️</footer>
+    <footer id="footer-id" style="margin-top: 80px">⚠️ This website is super professional! Totally trust it! ⚠️</footer>
 
     <script>
       document.getElementById("uninstaller-button-id").onmousedown = function (
@@ -152,6 +152,7 @@
       color: #ff00ff;
       margin: 15px;
       padding: 10px;
+      cursor: url("cursors/pixel-pointer.cur"), grab;
     }
 
     h3 {
@@ -164,10 +165,11 @@
     }
 
     h5 {
-      font-size: 20px;
+      font-size: 23px;
       color: #e1337e;
       text-decoration: underline wavy #42a8ff;
       transform: rotate(1deg);
+      margin-bottom: 5px;
     }
 
     .code-link {
@@ -210,7 +212,7 @@
       background: magenta;
       text-decoration: underline double orange;
       transition: transform 0.3s ease-in-out;
-      animation: scale-animation-hover 1.5s infinite ease-in-out;
+      animation: scale-animation-hover 1.0s infinite ease-in-out;
     }
 
     @keyframes scale-animation-hover {
@@ -273,6 +275,11 @@
       border-radius: 10px;
       display: inline-block;
       transform: rotate(-3deg);
+    }
+
+    .code-block:hover {
+      box-shadow: 5px 5px 20px #003000;
+      letter-spacing: 0.1px;
     }
 
     .copy-button {
