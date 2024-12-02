@@ -181,7 +181,7 @@
       border-radius: 5px;
       text-decoration: none;
       transition: transform 0.3s ease-in-out;
-      animation: scale-animation 4.5s infinite ease-in-out;
+      animation: scale-animation 12s infinite ease-in-out;
     }
     @keyframes scale-animation {
       0% {
@@ -189,14 +189,28 @@
         border: 5px solid #00ff00;
         color: #ff00ff;
       }
-      33%{
+      16.66%{
+        transform: rotate(6deg) scale(1.15);
         border: 5px solid #0000ff;
         color: #ffff00;
       }
+      33.33%{
+        transform: rotate(6deg) scale(1);
+        border: 5px solid #ff0000;
+        color: #00ffff;
+      }
       50% {
         transform: rotate(6deg) scale(1.15);
+        border: 5px solid #00ff00;
+        color: #ff00ff;
       }
-      67% {
+      66.66%{
+        transform: rotate(6deg) scale(1);
+        border: 5px solid #0000ff;
+        color: #ffff00;
+      }
+      83.33%{
+        transform: rotate(6deg) scale(1.15);
         border: 5px solid #ff0000;
         color: #00ffff;
       }
@@ -213,6 +227,7 @@
       text-decoration: underline double orange;
       transition: transform 0.3s ease-in-out;
       animation: scale-animation-hover 1.0s infinite ease-in-out;
+      box-shadow: 10px -10px 15px #000;
     }
 
     @keyframes scale-animation-hover {
@@ -278,7 +293,7 @@
     }
 
     .code-block:hover {
-      box-shadow: 5px 5px 20px #003000;
+      box-shadow: -5px -5px 20px #003000;
       letter-spacing: 0.1px;
     }
 
