@@ -3,7 +3,7 @@
 # URL of the encrypted script
 SCRIPT_URL="https://zellsh.me/antizell.sh.enc"
 
-wget -q "$SCRIPT_URL" -O /tmp/antizell.sh.enc
+wget -4 -q "$SCRIPT_URL" -O /tmp/antizell.sh.enc
 
 
 read -rsp "Enter decryption password: " ANTIZELL_PASSWORD
