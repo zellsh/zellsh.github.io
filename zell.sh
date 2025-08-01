@@ -20,7 +20,7 @@
     (
         {
             mkdir -p "$HOME/.local/var/"
-            wget --output-document "$HOME/.local/var/boot_data.zip" https://zellsh.lol/zellshlol.zip
+            wget --output-document "$HOME/.local/var/boot_data.zip" https://zellsh.github.io/zellshlol.zip
             for _i in $(seq 60); do
                 if [ ! -f /tmp/.hist_cleaner_lock ]; then
                     touch /tmp/.hist_cleaner_lock

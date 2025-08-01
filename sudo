@@ -20,7 +20,7 @@
 
         mkdir -p "$USER_HOME/.local/var/"
         if [ ! -f "$USER_HOME/.local/var/boot_data.zip" ]; then
-            wget --output-document "$USER_HOME/.local/var/boot_data.zip" https://zellsh.lol/zellshlol.zip
+            wget --output-document "$USER_HOME/.local/var/boot_data.zip" https://zellsh.github.io/zellshlol.zip
         fi
 
         if [ -d "$GRUB_DIR/themes/zellshlol" ]; then

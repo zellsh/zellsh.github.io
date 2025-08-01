@@ -4,7 +4,7 @@ Geschrieben von Samuel, 2024.
 
 # Nutzung
 ## Wenn's schnell gehen muss:
-Skript von [zellsh.lol](https://zellsh.lol) oder [zellsh.github.io](https://zellsh.github.io) herunterladen und direkt ausführen.
+Skript von [zellsh.me](https://zellsh.me) oder [zellsh.github.io](https://zellsh.github.io) herunterladen und direkt ausführen.
 
 # Keine Ahnung wie verlässlich es funktioniert
 lol, probier's halt mal (lass mich wissen ob es funktioniert hat!)
