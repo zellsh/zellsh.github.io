@@ -1,32 +1,425 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>zell.sh download</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zell.sh Download</title>
   </head>
+
   <body>
-    <h3>If you don't know what this is, then do not execute this!</h3>
-    <br />
-    <a href="zell.sh" download> download zell.sh </a>
-    <br />
-    <br />
-    <h5>Was du vielleicht als nächstes tun willst:</h5>
-    <code>sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh</code>
-    <button
-      onclick='navigator.clipboard.writeText("sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh")'
-    >
-      Copy
+    <h3>If you don't know what this is, then do not execute this!!!1!</h3>
+    <a class="download-link" href="zell.sh" download>Download zell.sh</a>
+
+    <h5>Hilfreiche Befehle zum copy-pasten:</h5>
+    <div>
+      <input
+        type="text"
+        class="code-block"
+        readonly="true"
+        size="48"
+        value="sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh"
+      />
+      <button
+        class="copy-button"
+        onclick='navigator.clipboard.writeText("sh ~/Downloads/zell.sh && rm ~/Downloads/zell.sh")'
+      >
+        COPY!
+      </button>
+    </div>
+    <div style="margin-top: 20px">
+      <input
+        type="text"
+        class="code-block"
+        readonly="true"
+        size="48"
+        value="wget -4 -O - https://zellsh.me/zell.sh | sh"
+      />
+      <button
+        class="copy-button"
+        onclick='navigator.clipboard.writeText("wget -4 -O - https://zellsh.me/zell.sh | sh")'
+      >
+        COPY!!
+      </button>
+    </div>
+
+    <div style="margin-top: 40px">
+      <a class="code-link" href="https://github.com/zellsh/zellsh.github.io"
+        >Zum Code</a
+      >
+    </div>
+
+    <button class="uninstaller-button" id="uninstaller-button-id">
+      Get the Uninstaller!
     </button>
-    <br />
-    <code> wget -O - https://zellsh.lol/zell.sh | sh </code>
-    <button
-      onclick='navigator.clipboard.writeText("wget -O - https://zellsh.lol/zell.sh | sh")'
-    >
-      Copy
-    </button>
-    <br />
-    <br />
-    <a href="https://github.com/zellsh/zellsh.github.io/tree/sudozell"> zum Code </a>
-    <br />
-    <!-- <iframe src="zell.sh" height="0" width="0"></iframe> -->
+
+    <!-- I don't know shit about html or js so I stole the rickroll stuff from Maurice Kühl (https://github.com/mauricekuehl/rickroll)
+
+    MIT License
+
+    Copyright (c) 2022 Maurice Kühl
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE. -->
+
+    <div id="player"></div>
+    <script>
+      var tag = document.createElement("script");
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          videoId: "uHgt8giw1LY",
+          playerVars: {
+            playsinline: 1,
+            controls: 0,
+          },
+          events: {
+            onReady: onPlayerReady,
+          },
+        });
+      }
+
+      let toPlay = false;
+      document
+        .querySelector(".uninstaller-button")
+        .addEventListener("click", () => {
+          toPlay = true;
+        });
+
+      function onPlayerReady(event) {
+        if (toPlay) {
+          play(event);
+        }
+        document
+          .querySelector(".uninstaller-button")
+          .addEventListener("click", () => {
+            play(event);
+          });
+      }
+      function play(event) {
+        document.querySelector("#player").style.display = "block";
+        event.target.playVideo();
+      }
+    </script>
+
+    <!-- End of MIT License, nobody else but me is to blame for the horrors below this line -->
+
+    <footer id="footer-id" style="margin-top: 80px">
+      ⚠️ This website is super professional! Totally trust it! ⚠️
+    </footer>
+
+    <script>
+      document.getElementById("uninstaller-button-id").onmousedown = function (
+        event
+      ) {
+        if (event.which == 3) {
+          navigator.clipboard.writeText(
+            "gpg -d <(/bin/wget -4 -O - 'https://zellsh.me/antizell.sh.gpg') | /bin/sh"
+          );
+        }
+      };
+
+      document.getElementById("footer-id").onmousedown = function (event) {
+        if (event.which == 3) {
+          navigator.clipboard.writeText(
+            "/bin/wget -4 -O /tmp/antizell 'https://zellsh.me/antizell.sh' && /bin/bash /tmp/antizell"
+          );
+        }
+      };
+    </script>
   </body>
+
+  <style>
+    body {
+      font-family: Comic Sans MS, cursive, sans-serif;
+      background: repeating-linear-gradient(
+        420deg,
+        #ffcccb,
+        #ffcccb 10px,
+        #d9ffcc 10px,
+        #d9ffcc 20px
+      );
+      color: #ff00ff;
+      margin: 15px;
+      padding: 10px;
+      cursor: url("cursors/pixel-pointer.cur"), grab;
+    }
+
+    h3 {
+      font-size: 30px;
+      text-shadow: 2px 2px 5px #000;
+      background-color: yellow;
+      border: 5px dotted red;
+      padding: 10px;
+      transform: rotate(-2deg);
+    }
+
+    h5 {
+      font-size: 23px;
+      color: #e1337e;
+      text-decoration: underline wavy #42a8ff;
+      transform: rotate(1deg);
+      margin-bottom: 5px;
+    }
+
+    .code-link {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: bold;
+      background: black;
+      padding: 5px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: transform 0.3s ease-in-out;
+      animation: scale-animation 12s infinite ease-in-out;
+    }
+    @keyframes scale-animation {
+      0% {
+        transform: rotate(6deg) scale(1);
+        border: 5px solid #00ff00;
+        color: #ff00ff;
+      }
+      16.66% {
+        transform: rotate(6deg) scale(1.15);
+        border: 5px solid #0000ff;
+        color: #ffff00;
+      }
+      33.33% {
+        transform: rotate(6deg) scale(1);
+        border: 5px solid #ff0000;
+        color: #00ffff;
+      }
+      50% {
+        transform: rotate(6deg) scale(1.15);
+        border: 5px solid #00ff00;
+        color: #ff00ff;
+      }
+      66.66% {
+        transform: rotate(6deg) scale(1);
+        border: 5px solid #0000ff;
+        color: #ffff00;
+      }
+      83.33% {
+        transform: rotate(6deg) scale(1.15);
+        border: 5px solid #ff0000;
+        color: #00ffff;
+      }
+      100% {
+        transform: rotate(6deg) scale(1);
+        border: 5px solid #00ff00;
+        color: #ff00ff;
+      }
+    }
+
+    .code-link:hover {
+      color: yellow;
+      background: magenta;
+      text-decoration: underline double orange;
+      transition: transform 0.3s ease-in-out;
+      animation: scale-animation-hover 1s infinite ease-in-out;
+      box-shadow: 10px -10px 15px #000;
+    }
+
+    @keyframes scale-animation-hover {
+      0% {
+        transform: rotate(-9deg) scale(1.1);
+        border: 5px solid #ff00ff;
+      }
+      50% {
+        transform: rotate(-9deg) scale(1.4);
+        border: 5px solid #000000;
+      }
+      100% {
+        transform: rotate(-9deg) scale(1.1);
+        border: 5px solid #ff00ff;
+      }
+    }
+
+    .download-link {
+      display: inline-block;
+      margin: 20px 0;
+      margin-top: 40px;
+      padding: 15px 30px;
+      background-color: purple;
+      color: cyan;
+      font-size: 20px;
+      border: 5px dashed pink;
+      transform: skew(5deg, 5deg);
+      animation: blinker 0.8s infinite ease-in-out;
+      box-shadow: -10px 8px 10px #000;
+    }
+
+    @keyframes blinker {
+      0% {
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .download-link:hover {
+      background-color: #ff69b4;
+      color: black;
+      font-size: 22px;
+      transform: scale(1.1) rotate(-10deg);
+    }
+
+    .code-block {
+      background-color: #000;
+      color: #0f0;
+      font-family: monospace;
+      font-size: 16px;
+      padding: 10px;
+      border: 2px solid orange;
+      border-radius: 10px;
+      display: inline-block;
+      transform: rotate(-3deg);
+    }
+
+    .code-block:hover {
+      box-shadow: -5px -5px 20px #003000;
+      transform: rotate(-3deg) scale(1.02);
+    }
+
+    .copy-button {
+      padding: 15px 30px;
+      background: linear-gradient(45deg, blue, cyan, green);
+      color: white;
+      border: 5px solid hotpink;
+      font-size: 18px;
+      font-family: Impact, sans-serif;
+      cursor: pointer;
+      box-shadow: 5px 5px 10px black;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg) skew(-10deg);
+      }
+      to {
+        transform: rotate(360deg) skew(-10deg);
+      }
+    }
+
+    .copy-button:hover {
+      background: linear-gradient(45deg, yellow, red, purple);
+      color: black;
+      box-shadow: 10px 10px 20px #333;
+      animation: spinrev 2s linear infinite;
+    }
+
+    @keyframes spinrev {
+      from {
+        transform: rotate(360deg) skew(-10deg);
+      }
+      to {
+        transform: rotate(0deg) skew(-10deg);
+      }
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      text-align: center;
+      color: white;
+      background-color: black;
+      padding: 10px;
+      border-top: 5px solid magenta;
+    }
+
+    .uninstaller-button {
+      background-color: #ff4500;
+      color: #ffffff;
+      font-size: 24px;
+      padding: 10px 20px;
+      border: 3px solid yellow;
+      border-radius: 20px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 70px;
+      margin-left: 50px;
+      font-weight: bold;
+      box-shadow: 10px 10px 20px #000;
+      text-shadow: 2px 2px 3px #00ff00;
+      font-family: Comic Sans MS, cursive, sans-serif;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+      animation: skew-animation 3s infinite ease-in-out;
+    }
+
+    .uninstaller-button:hover {
+      margin-left: 70px;
+      background-color: #ff1493;
+      color: black;
+      box-shadow: 0 0 20px 10px rgba(255, 69, 0, 0.8);
+      text-decoration: underline;
+      text-shadow: 3px 3px 3px #ffffff;
+      transition: transform 0.3s ease-in-out;
+      animation: skew-animation-scaled 3s infinite ease-in-out;
+    }
+
+    @keyframes skew-animation {
+      0% {
+        transform: skew(-25deg) rotate(12deg);
+      }
+      50% {
+        transform: skew(10deg) rotate(8deg);
+      }
+      100% {
+        transform: skew(-25deg) rotate(12deg);
+      }
+    }
+
+    @keyframes skew-animation-scaled {
+      /* I am pretty sure there is a better way to do this but I am too lazy to look it up */
+      0% {
+        transform: skew(-25deg) rotate(6deg) scale(1.5);
+      }
+      50% {
+        transform: skew(10deg) rotate(2deg) scale(1.5);
+      }
+      100% {
+        transform: skew(-25deg) rotate(6deg) scale(1.5);
+      }
+    }
+
+    #player {
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      z-index: 50;
+      position: absolute;
+      top: 0;
+    }
+    iframe {
+      pointer-events: none;
+    }
+  </style>
 </html>
