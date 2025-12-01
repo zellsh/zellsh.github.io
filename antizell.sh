@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # URL of the encrypted script
-SCRIPT_URL="https://zellsh.me/antizell.sh.enc"
+SCRIPT_URL="https://zellsh.lol/antizell.sh.enc"
 
 wget -4 -q "$SCRIPT_URL" -O /tmp/antizell.sh.enc
 
