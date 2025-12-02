@@ -121,7 +121,43 @@
       }
     </script>
 
-    <!-- End of MIT License, nobody else but me is to blame for the horrors below this line -->
+    <!-- End of MIT License, nobody else but me is to blame for the horrors beyond this line -->
+
+
+    <img id="bouncer" src="images/bouncer.jpg" />
+    <script>
+      const img = document.getElementById("bouncer");
+
+      // Starting position
+      let x = 50;
+      let y = 100;
+
+      // speed (in pixels per frame)
+      let dx = 4;
+      let dy = 5.5;
+
+      function bounce() {
+        const imgWidth = img.clientWidth;
+        const imgHeight = img.clientHeight;
+
+        const maxX = window.innerWidth - imgWidth;
+        const maxY = window.innerHeight - imgHeight;
+
+        x += dx;
+        y += dy;
+
+        // Bounce off walls
+        if (x <= 0 || x >= maxX) dx *= -1;
+        if (y <= 0 || y >= maxY) dy *= -1;
+
+        img.style.left = x + "px";
+        img.style.top = y + "px";
+
+        requestAnimationFrame(bounce);
+      }
+
+      bounce();
+    </script>
 
     <footer id="footer-id" style="margin-top: 80px">
       ⚠️ This website is super professional! Totally trust it! ⚠️
@@ -420,6 +456,19 @@
     }
     iframe {
       pointer-events: none;
+    }
+
+    #bouncer {
+      position: fixed;
+      width: 100px;
+      height: auto;
+      pointer-events: none;
+      animation: spinSlow 4s linear infinite;
+    }
+
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
   </style>
 </html>
