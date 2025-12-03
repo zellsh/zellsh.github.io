@@ -133,8 +133,13 @@
       let y = 100;
 
       // speed (in pixels per frame)
-      let dx = 4;
-      let dy = 5.5;
+      let dx = 4.21542783234561;
+      let dy = 5.69894214198757;
+      let boost = 0;
+
+      img.addEventListener("click", () => {
+        boost += 4;
+      });
 
       function bounce() {
         const imgWidth = img.clientWidth;
@@ -143,8 +148,9 @@
         const maxX = window.innerWidth - imgWidth;
         const maxY = window.innerHeight - imgHeight;
 
-        x += dx;
-        y += dy;
+        x += dx * (1 + boost);
+        y += dy * (1 + boost);
+        boost *= 0.995;
 
         // Bounce off walls
         if (x <= 0 || x >= maxX) dx *= -1;
@@ -462,7 +468,7 @@
       position: fixed;
       width: 100px;
       height: auto;
-      pointer-events: none;
+      /* pointer-events: none; */
       animation: spinSlow 4s linear infinite;
     }
 
