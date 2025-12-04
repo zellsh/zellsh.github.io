@@ -124,7 +124,10 @@
     <!-- End of MIT License, nobody else but me is to blame for the horrors beyond this line -->
 
     <img class="bouncer" src="images/bouncer.jpg" />
+    <img class="bouncer" src="images/bouncer.jpg" />
     <img class="bouncer" src="images/bouncer2.png" />
+    <img class="bouncer" src="images/bouncer2.png" />
+    <img class="bouncer" src="images/bouncer3.png" />
     <img class="bouncer" src="images/bouncer3.png" />
 
     <style>
@@ -141,47 +144,59 @@
     </style>
 
     <script>
-      function createBouncer(img, startX, startY) {
+      function createBouncer(img) {
+        const imgWidth = img.clientWidth;
+        const imgHeight = img.clientHeight;
+
+        const maxX = window.innerWidth - imgWidth;
+        const maxY = window.innerHeight - imgHeight;
+
         // Independent state for this image
-        let x = startX;
-        let y = startY;
-        let dx = (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
-        let dy = (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
+        let x = Math.random() * maxX;
+        let y = Math.random() * maxY;
+        let dx = 45 * (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
+        let dy = 45 * (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
         let boost = 0;
 
-        const secondsperrotation = Math.random() * 7 + 0.5;  // time in seconds
+        const angularSpeed = (Math.random() * 240 + 30) * (Math.random() < 0.5 ? -1 : 1);
+        let angle = 42;//Math.random() * 360; // start at random angle
 
         img.addEventListener("click", () => {
           boost += 4;
         });
 
-        function bounce() {
-          const imgWidth = img.clientWidth;
-          const imgHeight = img.clientHeight;
+        let lastTs = null;
 
-          const maxX = window.innerWidth - imgWidth;
-          const maxY = window.innerHeight - imgHeight;
+        function bounce(ts) {
+          if (lastTs === null) lastTs = ts;
+          const dt = (ts - lastTs) / 1000; // seconds since last frame
+          lastTs = ts;
 
-          x += dx * (1 + boost);
-          y += dy * (1 + boost);
-          img.style.animation = `spinSlow ${secondsperrotation / (1 + boost)}s linear infinite`;
+          angle += angularSpeed * (1 + boost) * dt;
+          img.style.transform = `rotate(${angle}deg) translateZ(0)`;
+
+          x += dx * (1 + boost) * dt;
+          y += dy * (1 + boost) * dt;
+
+          if (x <= 0)    { x = 0;    dx *= -1; }
+          if (x >= maxX) { x = maxX; dx *= -1; }
+          if (y <= 0)    { y = 0;    dy *= -1; }
+          if (y >= maxY) { y = maxY; dy *= -1; }
+
           boost *= 0.995;
-
-          if (x <= 0 || x >= maxX) dx *= -1;
-          if (y <= 0 || y >= maxY) dy *= -1;
 
           img.style.left = x + "px";
           img.style.top = y + "px";
 
-          requestAnimationFrame(bounce);
+          requestAnimationFrame((ts) => bounce(ts));
         }
 
-        bounce();
+        requestAnimationFrame((ts) => bounce(ts));
       }
 
       // Create bouncers for all images with class 'bouncer'
       document.querySelectorAll(".bouncer").forEach((img, index) => {
-        createBouncer(img, 100 + index * 150, 150);
+        createBouncer(img);
       });
     </script>
 
