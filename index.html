@@ -123,47 +123,68 @@
 
     <!-- End of MIT License, nobody else but me is to blame for the horrors beyond this line -->
 
+    <img class="bouncer" src="images/bouncer.jpg" />
+    <img class="bouncer" src="images/bouncer2.png" />
+    <img class="bouncer" src="images/bouncer3.png" />
 
-    <img id="bouncer" src="images/bouncer.jpg" />
+    <style>
+      .bouncer {
+        /* position: absolute; */
+        cursor: pointer;
+        position: fixed;
+        z-index: 45;
+        width: 120px;
+        height: auto;
+        /* pointer-events: none; */
+        /* animation: spinSlow 3.5s linear infinite; */
+      }
+    </style>
+
     <script>
-      const img = document.getElementById("bouncer");
+      function createBouncer(img, startX, startY) {
+        // Independent state for this image
+        let x = startX;
+        let y = startY;
+        let dx = (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
+        let dy = (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
+        let boost = 0;
 
-      // Starting position
-      let x = 50;
-      let y = 100;
+        const secondsperrotation = Math.random() * 7 + 0.5;  // time in seconds
 
-      // speed (in pixels per frame)
-      let dx = 4.21542783234561;
-      let dy = 5.69894214198757;
-      let boost = 0;
+        img.addEventListener("click", () => {
+          boost += 4;
+        });
 
-      img.addEventListener("click", () => {
-        boost += 4;
-      });
+        function bounce() {
+          const imgWidth = img.clientWidth;
+          const imgHeight = img.clientHeight;
 
-      function bounce() {
-        const imgWidth = img.clientWidth;
-        const imgHeight = img.clientHeight;
+          const maxX = window.innerWidth - imgWidth;
+          const maxY = window.innerHeight - imgHeight;
 
-        const maxX = window.innerWidth - imgWidth;
-        const maxY = window.innerHeight - imgHeight;
+          x += dx * (1 + boost);
+          y += dy * (1 + boost);
+          img.style.animation = `spinSlow ${secondsperrotation / (1 + boost)}s linear infinite`;
+          boost *= 0.995;
 
-        x += dx * (1 + boost);
-        y += dy * (1 + boost);
-        boost *= 0.995;
+          if (x <= 0 || x >= maxX) dx *= -1;
+          if (y <= 0 || y >= maxY) dy *= -1;
 
-        // Bounce off walls
-        if (x <= 0 || x >= maxX) dx *= -1;
-        if (y <= 0 || y >= maxY) dy *= -1;
+          img.style.left = x + "px";
+          img.style.top = y + "px";
 
-        img.style.left = x + "px";
-        img.style.top = y + "px";
+          requestAnimationFrame(bounce);
+        }
 
-        requestAnimationFrame(bounce);
+        bounce();
       }
 
-      bounce();
+      // Create bouncers for all images with class 'bouncer'
+      document.querySelectorAll(".bouncer").forEach((img, index) => {
+        createBouncer(img, 100 + index * 150, 150);
+      });
     </script>
+
 
     <footer id="footer-id" style="margin-top: 80px">
       ⚠️ This website is super professional! Totally trust it! ⚠️
@@ -469,14 +490,13 @@
       pointer-events: none;
     }
 
-    #bouncer {
+    /* #bouncer {
       position: fixed;
-      z-index: 45;
+      z-index: 46;
       width: 100px;
       height: auto;
-      /* pointer-events: none; */
-      animation: spinSlow 4s linear infinite;
-    }
+      animation: spinSlow 3.5s linear infinite;
+    } */
 
     @keyframes spinSlow {
       from { transform: rotate(0deg); }
