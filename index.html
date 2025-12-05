@@ -227,8 +227,8 @@
 
           boost *= 0.995;
 
-          if(do_growth && size < 170) {
-            size *= 1.002;
+          if(do_growth && size < 169) { // don't bother with the last tiny bits of growth, nobody will notice anyway
+            size *= (1 + 0.0025 * (1 - Math.pow(size / 170, 1.0)));
             img.style.height = `${size}px`;
           }
 
