@@ -142,7 +142,6 @@
     <img class="bouncer" src="images/bouncer1.png" draggable="false" />
     <img class="bouncer" src="images/bouncer2.png" draggable="false" />
     <img class="bouncer" src="images/bouncer3.png" draggable="false" />
-    <img class="bouncer" src="images/bouncer3.png" draggable="false" />
     <img class="bouncer" src="images/bouncer2.png" draggable="false" />
     <img class="bouncer" src="images/bouncer1.png" draggable="false" />
 
@@ -158,24 +157,48 @@
     </style>
 
     <script>
-      function createBouncer(img) {
-        img.style.height = `${120 * (0.7 + 0.6 * Math.random())}px`;
+      function createBouncer(img, x, y, dx, dy, size, do_growth) {
+        size = (size !== undefined) ? size : 120 * (0.7 + 0.6 * Math.random());
+        img.style.height = `${size}px`;
+        do_growth = (do_growth !== undefined) ? do_growth : false;
 
         const maxX = window.innerWidth - img.clientWidth;
         const maxY = window.innerHeight - img.clientHeight;
 
         // Independent state for this image
-        let x = Math.random() * maxX;
-        let y = Math.random() * maxY;
-        let dx = 45 * (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
-        let dy = 45 * (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
+        x = (x  !== undefined) ? x : Math.random() * maxX;
+        y = (y  !== undefined) ? y : Math.random() * maxY;
+        dx = (dx  !== undefined) ? dx : 45 * (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
+        dy = (dy  !== undefined) ? dy : 45 * (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
         let boost = 0;
 
         let angularSpeed = (Math.random() * 240 + 30) * (Math.random() < 0.5 ? -1 : 1);
         let angle = Math.random() * 360; // start at random angle
 
         img.addEventListener("click", () => {
-          boost += 5;
+          if (img.src.includes("bouncer3")) {
+            const rad = 30 * 2 * Math.PI / 360; // rotation angle
+            const c = Math.cos(rad);
+            const s = Math.sin(rad);
+            // Counterclockwise
+            const ccw_dx = dx * c - dy * s;
+            const ccw_dy = dx * s + dy * c;
+            // Clockwise
+            const cw_dx = dx * c + dy * s;
+            const cw_dy = -dx * s + dy * c;
+
+            const clone1 = img.cloneNode(true);
+            const clone2 = img.cloneNode(true);
+            document.body.appendChild(clone1);
+            document.body.appendChild(clone2);
+            createBouncer(clone1, x, y, ccw_dx, ccw_dy, 0.6 * size, true);
+            createBouncer(clone2, x, y, cw_dx, cw_dy, 0.6 * size, true);
+            img.remove();
+            return;
+          }
+          else {
+            boost += 5;
+          }
         });
 
         let lastTs = null;
@@ -201,6 +224,11 @@
           img.style.top = y + "px";
 
           boost *= 0.995;
+
+          if(do_growth && size < 170) {
+            size *= 1.002;
+            img.style.height = `${size}px`;
+          }
 
           requestAnimationFrame((ts) => bounce(ts));
         }
