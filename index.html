@@ -175,6 +175,11 @@
         let angularSpeed = (Math.random() * 240 + 30) * (Math.random() < 0.5 ? -1 : 1);
         let angle = Math.random() * 360; // start at random angle
 
+        img.addEventListener("contextmenu", (e) => {
+          e.preventDefault();               // Stop the normal right-click menu
+          window.open("https://www.inf.ufsc.br/~aldo.vw/patrec/SNNS/People/zell.html", "_blank");  // Open in new tab
+        });
+
         img.addEventListener("click", () => {
           if (img.src.includes("bouncer3")) {
             let speed_factor = 1 + 0.5 * Math.random();
