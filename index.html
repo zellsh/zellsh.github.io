@@ -7,9 +7,19 @@
   </head>
 
   <body>
-    <h3 onclick='body.style.animation = `barrelroll 3s linear`;' >
+    <h3 onclick="startBarrelroll()">
       If you don't know what this is, then do not execute this!!!1!
     </h3>
+
+    <script>
+      function startBarrelroll() {
+        document.body.style.animation = 'barrelroll 3s linear';
+        setTimeout(() => {  // remove animation after it ends so it can be replayed
+          document.body.style.animation = '';
+        }, 3000); // match the animation duration
+      }
+    </script>
+
     <a class="download-link" href="zell.sh" download>Download zell.sh</a>
 
     <h5>Hilfreiche Befehle zum copy-pasten:</h5>
@@ -233,6 +243,21 @@
   <style>
     body {
       font-family: Comic Sans MS, cursive, sans-serif;
+      color: #ff00ff;
+      margin: 15px;
+      padding: 10px;
+      height: 100vh;
+      cursor: url("cursors/pixel-pointer.cur"), grab;
+      position: relative;
+      overflow: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background: repeating-linear-gradient(
         420deg,
         #ffcccb,
@@ -240,11 +265,8 @@
         #d9ffcc 10px,
         #d9ffcc 20px
       );
-      color: #ff00ff;
-      margin: 15px;
-      padding: 10px;
-      height: 100vh;
-      cursor: url("cursors/pixel-pointer.cur"), grab;
+      z-index: -1;
+      transform-origin: center center;
     }
     @keyframes barrelroll {
       from { transform: rotate(0deg); }
