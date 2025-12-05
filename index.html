@@ -254,8 +254,8 @@
         document.body.appendChild(emoji);
 
         // Position at cursor
-        emoji.style.left = e.clientX + "px";
-        emoji.style.top  = e.clientY + "px";
+        emoji.style.left = (e.clientX + Math.random() * 20 - 10) + "px";
+        emoji.style.top  = (e.clientY + Math.random() * 20 - 10) + "px";
 
         trails.push(emoji);
 
@@ -263,14 +263,14 @@
         setTimeout(() => {
           emoji.style.transform = `translate(${Math.random()*50-25}px, ${Math.random()*50-25}px) rotate(${Math.random()*360}deg) scale(0)`;
           emoji.style.opacity = 0;
-        }, 150);
+        }, 0);
 
         // Remove from DOM after animation
         setTimeout(() => {
           emoji.remove();
           const index = trails.indexOf(emoji);
           if (index > -1) trails.splice(index,1);
-        }, 600);
+        }, 3000);
       });
     </script>
 
@@ -336,7 +336,7 @@
       user-select: none;
       will-change: transform, opacity;
       z-index: 9999;
-      transition: transform 0.2s linear, opacity 0.5s linear;
+      transition: transform 1.1s linear, opacity 1.1s linear;
     }
 
     h3 {
