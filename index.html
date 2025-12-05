@@ -7,7 +7,9 @@
   </head>
 
   <body>
-    <h3>If you don't know what this is, then do not execute this!!!1!</h3>
+    <h3 onclick='body.style.animation = `barrelroll 3s linear`;' >
+      If you don't know what this is, then do not execute this!!!1!
+    </h3>
     <a class="download-link" href="zell.sh" download>Download zell.sh</a>
 
     <h5>Hilfreiche Befehle zum copy-pasten:</h5>
@@ -159,7 +161,7 @@
         let dy = 45 * (Math.random() * 8 + 1) * (Math.random() < 0.5 ? -1 : 1);
         let boost = 0;
 
-        const angularSpeed = (Math.random() * 240 + 30) * (Math.random() < 0.5 ? -1 : 1);
+        let angularSpeed = (Math.random() * 240 + 30) * (Math.random() < 0.5 ? -1 : 1);
         let angle = Math.random() * 360; // start at random angle
 
         img.addEventListener("click", () => {
@@ -181,10 +183,10 @@
 
           x += dx * (1 + boost) * dt;
           y += dy * (1 + boost) * dt;
-          if (x <= 0)    { x = 0;    dx *= -1; }
-          if (x >= maxX) { x = maxX; dx *= -1; }
-          if (y <= 0)    { y = 0;    dy *= -1; }
-          if (y >= maxY) { y = maxY; dy *= -1; }
+          if (x <= 0)    { x = 0;    dx *= -1; angularSpeed *= (Math.random() < 0.2 ? -1 : 1); }
+          if (x >= maxX) { x = maxX; dx *= -1; angularSpeed *= (Math.random() < 0.2 ? -1 : 1); }
+          if (y <= 0)    { y = 0;    dy *= -1; angularSpeed *= (Math.random() < 0.2 ? -1 : 1); }
+          if (y >= maxY) { y = maxY; dy *= -1; angularSpeed *= (Math.random() < 0.2 ? -1 : 1); }
           img.style.left = x + "px";
           img.style.top = y + "px";
 
@@ -243,6 +245,10 @@
       padding: 10px;
       height: 100vh;
       cursor: url("cursors/pixel-pointer.cur"), grab;
+    }
+    @keyframes barrelroll {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
     }
 
     h3 {
