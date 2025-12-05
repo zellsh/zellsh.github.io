@@ -177,15 +177,17 @@
 
         img.addEventListener("click", () => {
           if (img.src.includes("bouncer3")) {
-            const rad = 30 * 2 * Math.PI / 360; // rotation angle
+            let speed_factor = 1 + 0.5 * Math.random();
+            if (Math.random() < 0.5) { speed_factor = 1 / speed_factor; }
+            const rad = (10 + 8 * Math.random()) * 2 * Math.PI / 360; // rotation angle
             const c = Math.cos(rad);
             const s = Math.sin(rad);
             // Counterclockwise
-            const ccw_dx = dx * c - dy * s;
-            const ccw_dy = dx * s + dy * c;
+            const ccw_dx = (dx * c - dy * s) * speed_factor;
+            const ccw_dy = (dx * s + dy * c) * speed_factor;
             // Clockwise
-            const cw_dx = dx * c + dy * s;
-            const cw_dy = -dx * s + dy * c;
+            const cw_dx = (dx * c + dy * s) * speed_factor;
+            const cw_dy = (-dx * s + dy * c) * speed_factor;
 
             const clone1 = img.cloneNode(true);
             const clone2 = img.cloneNode(true);
@@ -310,7 +312,7 @@
       // First user interaction unlocks audio (required by browsers)
       document.addEventListener("click", () => {
         if (!audioUnlocked) {
-          pew.play().catch(()=>{});
+          pew.play().catch(() => {});
           audioUnlocked = true;
           return;
         }
