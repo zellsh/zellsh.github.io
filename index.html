@@ -238,6 +238,62 @@
         }
       };
     </script>
+
+    <script>
+      const emojis = ["Zell","🗣️","🧠","👀","🥵","😳","🦄","💥","🔥","🌈",];
+      const trails = [];
+
+      document.addEventListener("mousemove", (e) => {
+        const emoji = document.createElement("div");
+        emoji.classList.add("emoji-trail");
+        emoji.textContent = (Math.random() < 0.96 ? "✨" : emojis[Math.floor(Math.random() * emojis.length)]);
+
+        // Random size for extra chaos
+        emoji.style.fontSize = `${12 + Math.random()*36}px`;
+
+        document.body.appendChild(emoji);
+
+        // Position at cursor
+        emoji.style.left = e.clientX + "px";
+        emoji.style.top  = e.clientY + "px";
+
+        trails.push(emoji);
+
+        // Animate fade out and shrink
+        setTimeout(() => {
+          emoji.style.transform = `translate(${Math.random()*50-25}px, ${Math.random()*50-25}px) rotate(${Math.random()*360}deg) scale(0)`;
+          emoji.style.opacity = 0;
+        }, 150);
+
+        // Remove from DOM after animation
+        setTimeout(() => {
+          emoji.remove();
+          const index = trails.indexOf(emoji);
+          if (index > -1) trails.splice(index,1);
+        }, 600);
+      });
+    </script>
+
+    <script>
+      // Load a laser / pew sound
+      const pew = new Audio("images/pew.wav");
+      let audioUnlocked = false;
+
+      // First user interaction unlocks audio (required by browsers)
+      document.addEventListener("click", () => {
+        if (!audioUnlocked) {
+          pew.play().catch(()=>{});
+          audioUnlocked = true;
+          return;
+        }
+
+        // Play pew sound on every click
+        const snd = pew.cloneNode(); // allows overlapping pew pew pew
+        snd.volume = 0.5;
+        snd.play();
+      });
+    </script>
+
   </body>
 
   <style>
@@ -271,6 +327,16 @@
     @keyframes barrelroll {
       from { transform: rotate(0deg); }
       to   { transform: rotate(360deg); }
+    }
+
+    .emoji-trail {
+      position: fixed;
+      pointer-events: none; /* so it doesn’t block clicks */
+      font-size: 24px;
+      user-select: none;
+      will-change: transform, opacity;
+      z-index: 9999;
+      transition: transform 0.2s linear, opacity 0.5s linear;
     }
 
     h3 {
