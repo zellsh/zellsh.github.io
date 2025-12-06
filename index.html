@@ -157,10 +157,11 @@
     </style>
 
     <script>
-      function createBouncer(img, x, y, dx, dy, size, do_growth) {
+      function createBouncer(img, x, y, dx, dy, size, do_growth, persistent) {
         size = (size !== undefined) ? size : 120 * (0.7 + 0.6 * Math.random());
         img.style.height = `${size}px`;
         do_growth = (do_growth !== undefined) ? do_growth : false;
+        persistent = (persistent !== undefined) ? persistent : true;
 
         const maxX = window.innerWidth - img.clientWidth;
         const maxY = window.innerHeight - img.clientHeight;
@@ -198,8 +199,8 @@
             const clone2 = img.cloneNode(true);
             document.body.appendChild(clone1);
             document.body.appendChild(clone2);
-            createBouncer(clone1, x, y, ccw_dx, ccw_dy, 0.6 * size, true);
-            createBouncer(clone2, x, y, cw_dx, cw_dy, 0.6 * size, true);
+            createBouncer(clone1, x, y, ccw_dx, ccw_dy, 0.6 * size, true, (Math.random() < 0.01));
+            createBouncer(clone2, x, y, cw_dx, cw_dy, 0.6 * size, true, persistent);
             img.remove();
             return;
           }
@@ -232,9 +233,21 @@
 
           boost *= 0.995;
 
-          if(do_growth && size < 149) { // don't bother with the last tiny bits of growth, nobody will notice anyway
-            size *= (1 + 0.0025 * (1 - Math.pow(size / 150, 1.0)));
-            img.style.height = `${size}px`;
+          if (do_growth) {
+            if (size < 149) { // don't bother with the last tiny bits of growth, nobody will notice anyway
+              size *= (1 + 0.0025 * (1 - Math.pow(size / 150, 1.0)));
+              img.style.height = `${size}px`;
+            }
+            else if (!persistent) {
+              setTimeout(() => {
+                img.classList.add("zellteilung-fadeout");
+                img.style.opacity = 0;
+                setTimeout(() => {
+                  img.remove();
+                }, 5000);
+              }, Math.random() * 60 * 1000);
+              do_growth = false;
+            }
           }
 
           requestAnimationFrame((ts) => bounce(ts));
@@ -372,6 +385,11 @@
       will-change: transform, opacity;
       z-index: 9999;
       transition: transform 1.1s linear, opacity 1.1s linear;
+    }
+
+    .zellteilung-fadeout {
+      will-change: opacity;
+      transition: opacity 2s linear;
     }
 
     h3 {
