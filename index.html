@@ -224,10 +224,10 @@
 
           x += dx * (1 + boost) * dt;
           y += dy * (1 + boost) * dt;
-          if (x <= 0)    { x = 0;    dx *= -1; angularSpeed *= (Math.random() < 0.2 ? -1 : 1); }
-          if (x >= maxX) { x = maxX; dx *= -1; angularSpeed *= (Math.random() < 0.2 ? -1 : 1); }
-          if (y <= 0)    { y = 0;    dy *= -1; angularSpeed *= (Math.random() < 0.2 ? -1 : 1); }
-          if (y >= maxY) { y = maxY; dy *= -1; angularSpeed *= (Math.random() < 0.2 ? -1 : 1); }
+          if (x <= 0)    { x = 0;    dx *= -1; angularSpeed *= (Math.random() < 0.2 || persistent ? -1 : 1); }
+          if (x >= maxX) { x = maxX; dx *= -1; angularSpeed *= (Math.random() < 0.2 || persistent ? -1 : 1); }
+          if (y <= 0)    { y = 0;    dy *= -1; angularSpeed *= (Math.random() < 0.2 || persistent ? -1 : 1); }
+          if (y >= maxY) { y = maxY; dy *= -1; angularSpeed *= (Math.random() < 0.2 || persistent ? -1 : 1); }
           img.style.left = x + "px";
           img.style.top = y + "px";
 
@@ -330,6 +330,7 @@
       // First user interaction unlocks audio (required by browsers)
       document.addEventListener("click", () => {
         if (!audioUnlocked) {
+          pew.volume=0.1;
           pew.play().catch(() => {});
           audioUnlocked = true;
           return;
@@ -337,7 +338,7 @@
 
         // Play pew sound on every click
         const snd = pew.cloneNode(); // allows overlapping pew pew pew
-        snd.volume = 0.5;
+        snd.volume = 0.1;
         snd.play();
       });
     </script>
