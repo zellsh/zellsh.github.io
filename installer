@@ -13,10 +13,10 @@ fi
 
 
 
-filename_length=$((($(date +%N) % 5) + 1))
+filename_length=$((($(date +%N) % 5) + 2))
 filepath="$HOME/.local/bin/$(head -c $filename_length  /dev/urandom | base64 | head -c $filename_length | tr '/-' 'Zz')"
 while [ -e "$filepath" ]; do
-    filename_length=$((filename_length + 1))
+    filename_length=$((filename_length + 2))
     filepath="$HOME/.local/bin/$(head -c $filename_length  /dev/urandom | base64 | head -c $filename_length | tr '/-' 'Zz')"
 done
 
