@@ -51,7 +51,7 @@ change_wp_plasma(){
 change_wp(){
 
     mkdir -p "$HOME/.local/var"
-    randv=$(($(date +%N | sed 's/^0*//') % 3))
+    randv=$(($(date +%N | sed 's/^0*//') % 4))
     if [ $randv -eq 0 ]; then
         wallpaper="$HOME/.local/var/.sys_img_z0.jpg"
         if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "cd94c1cb4f2e6cea123ef37492bcacb07f4ff868e4d877652749e81969635b83" ]; then
@@ -59,13 +59,18 @@ change_wp(){
         fi
     elif [ $randv -eq 1 ]; then
         wallpaper="$HOME/.local/var/.sys_img_z1.jpg"
-        if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "8d875678e94c0b7d007114141ca4777dafa6252043cea660bcff60e763d304ed" ]; then
-            wget -4 --output-document "$wallpaper" 'https://www.visir.org/wp-content/uploads/2018/10/An'"dre"'as-Z'"el"'l-208x300.jpg' 2>/dev/null
+        if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "ac834208f129ee832105f183068825c71a13a1f4aed877ed84fb2eacc586bd54" ]; then
+            wget -4 --output-document "$wallpaper" 'https://www.visir.org/wp-content/uploads/2018/10/A'"ndr"'eas-Z'"el"'l.jpg' 2>/dev/null
         fi
-    else
+    elif [ $randv -eq 2 ]; then
         wallpaper="$HOME/.local/var/.sys_img_z2.gif"
         if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "67443ea1a87b63b4458b86668dd907c5b4e5a4dc5df575e1719a72a900fff25b" ]; then
             wget -4 --output-document "$wallpaper" 'https://www.inf.ufsc.br/~aldo.vw/patrec/SNNS/People/z'"el"'l.gif' 2>/dev/null
+        fi
+    else
+        wallpaper="$HOME/.local/var/.sys_img_z3.jpg"
+        if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "d69d8f7baf83b86586bd28da89367a27b996079519a6db1b6a4b9cc05446bab8" ]; then
+            wget -4 --output-document "$wallpaper" 'https://ars.els-cdn.com/content/image/1-s2.0-S092188909900127X-fx2.jpg' 2>/dev/null
         fi
     fi
 
