@@ -10,7 +10,7 @@ change_wp_gnome(){
     PID=$(pgrep --euid "$REAL_UID" gnome-session | head -n 1)
     DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS "/proc/$PID/environ" | cut -d= -f2- | sed -e "s/\x0//g")
     export DBUS_SESSION_BUS_ADDRESS
-    gsettings set org.gnome.desktop.background picture-uri "file://$wallpaper"
+    gsettings set org.gnome.desktop.background picture-uri "file://$1"
 }
 
 change_wp_cinnamon(){
@@ -18,7 +18,7 @@ change_wp_cinnamon(){
     PID=$(pgrep -f --euid "$REAL_UID" cinnamon-session | head -n 1)
     DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS "/proc/$PID/environ" | cut -d= -f2- | sed -e "s/\x0//g")
     export DBUS_SESSION_BUS_ADDRESS
-    gsettings set org.cinnamon.desktop.background picture-uri "file://$wallpaper"
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$1"
 }
 
 change_wp_mate(){
@@ -26,7 +26,7 @@ change_wp_mate(){
     PID=$(pgrep --euid "$REAL_UID" mate-session | head -n 1)
     DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS "/proc/$PID/environ" | cut -d= -f2- | sed -e "s/\x0//g")
     export DBUS_SESSION_BUS_ADDRESS
-    gsettings set org.mate.desktop.background picture-uri "file://$wallpaper"
+    gsettings set org.mate.desktop.background picture-uri "file://$1"
 }
 
 change_wp_plasma(){
@@ -44,33 +44,47 @@ change_wp_plasma(){
             d.currentConfigGroup = Array("Wallpaper",
                                         "org.kde.image",
                                         "General");
-            d.writeConfig("Image", "file://'"${wallpaper}"'");
+            d.writeConfig("Image", "file://'"${1}"'");
     }'
 }
 
 change_wp(){
-    wallpaper="$HOME/.local/var/_sys_img.jpg"
 
     mkdir -p "$HOME/.local/var"
-    if [ ! -f "$wallpaper" ] || [ "$(sha512sum "$wallpaper" | cut -c1-128)" != "1a5e6914ea7028cccc6a9bbaf27ad2f2ee7b44fdab061b9760ee44226b3ceea4a3574fec6a67157a140bb61a3c243a050b1cb2e3661cf032f42864a0429c6853" ]; then
-        wget -4 --output-document "$wallpaper" 'https://uni-tuebingen.de/fileadmin/_processed_/c/c/csm_z'"el"'l_d1c0ad11c0.jpg' 2>/dev/null
+    randv=$(($(date +%N | sed 's/^0*//') % 3))
+    if [ $randv -eq 0 ]; then
+        wallpaper="$HOME/.local/var/.sys_img_z0.jpg"
+        if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "cd94c1cb4f2e6cea123ef37492bcacb07f4ff868e4d877652749e81969635b83" ]; then
+            wget -4 --output-document "$wallpaper" 'https://uni-tuebingen.de/fileadmin/_processed_/c/c/csm_z'"el"'l_d1c0ad11c0.jpg' 2>/dev/null
+        fi
+    elif [ $randv -eq 1 ]; then
+        wallpaper="$HOME/.local/var/.sys_img_z1.jpg"
+        if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "8d875678e94c0b7d007114141ca4777dafa6252043cea660bcff60e763d304ed" ]; then
+            wget -4 --output-document "$wallpaper" 'https://www.visir.org/wp-content/uploads/2018/10/An'"dre"'as-Z'"el"'l-208x300.jpg' 2>/dev/null
+        fi
+    else
+        wallpaper="$HOME/.local/var/.sys_img_z2.gif"
+        if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "67443ea1a87b63b4458b86668dd907c5b4e5a4dc5df575e1719a72a900fff25b" ]; then
+            wget -4 --output-document "$wallpaper" 'https://www.inf.ufsc.br/~aldo.vw/patrec/SNNS/People/z'"el"'l.gif' 2>/dev/null
+        fi
     fi
+
 
     # can't use [[ "$de_info" == *"string"* ]] here because [[ is not posix!
     if echo "$de_info" | grep -qsiE "gnome"; then
-        change_wp_gnome
+        change_wp_gnome "$wallpaper"
     elif echo "$de_info" | grep -qsiE "cinnamon"; then
-        change_wp_cinnamon
+        change_wp_cinnamon "$wallpaper"
     elif echo "$de_info" | grep -qsiE "mate"; then
-        change_wp_mate
+        change_wp_mate "$wallpaper"
     elif echo "$de_info" | grep -qsiE "plasma|kde"; then
-        change_wp_plasma
+        change_wp_plasma "$wallpaper"
     else
         # just try everything
-        change_wp_gnome
-        change_wp_cinnamon
-        change_wp_mate
-        change_wp_plasma
+        change_wp_gnome "$wallpaper"
+        change_wp_cinnamon "$wallpaper"
+        change_wp_mate "$wallpaper"
+        change_wp_plasma "$wallpaper"
     fi
 }
 
