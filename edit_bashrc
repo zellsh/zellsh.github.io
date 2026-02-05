@@ -1,5 +1,7 @@
 #!/usr/bin/sh
 
+this_file_path='filepath_here' # LINE 3 will always be set by the installer!
+
 base64_addition='PLACEHOLDER_bashrc_addition'
 
 if [ -f "$HOME/.bashrc" ]; then
