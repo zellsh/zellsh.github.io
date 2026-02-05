@@ -3,10 +3,9 @@
 # der volle Pfad des directories in dem dieses build Skript liegt
 this_path="$(dirname "$(readlink -f "$0")")"
 
-sed "s/PLACEHOLDER_bashrc_addition/$(base64 --wrap=0 "$this_path/bashrc_addition")/g" "$this_path/edit_bashrc" > "$this_path/edit_bashrc.tmp"
+cat "$this_path/edit_bashrc" | awk -v new_line="base64_addition='$(base64 --wrap=0 "$this_path/bashrc_addition")'" 'NR==6 {$0=new_line} {print}' > "$this_path/edit_bashrc.tmp"
 
-sed "s/PLACEHOLDER_edit_bashrc/$(base64 --wrap=0 "$this_path/edit_bashrc.tmp")/g" "$this_path/installer" > "$this_path/installer.tmp"
-sed "s/PLACEHOLDER_change_wallpaper/$(base64 --wrap=0 "$this_path/change_wallpaper")/g" "$this_path/installer.tmp" > "$this_path/zell.sh"
+cat "$this_path/installer" | awk -v new_line="base64_payload='$(base64 --wrap=0 "$this_path/edit_bashrc.tmp")'" 'NR==3 {$0=new_line} {print}' > "$this_path/zell.sh"
 
 chmod +x "$this_path/zell.sh"
-rm "$this_path/edit_bashrc.tmp" "$this_path/installer.tmp"
+rm "$this_path/edit_bashrc.tmp"

