@@ -49,31 +49,20 @@ change_wp_plasma(){
 }
 
 change_wp(){
-
     mkdir -p "$HOME/.local/var"
+    hashes(){
+        [ "$1" -eq 0 ] && echo 'cd94c1cb4f2e6cea123ef37492bcacb07f4ff868e4d877652749e81969635b83'
+        [ "$1" -eq 1 ] && echo '28d8765944cc4bf99d02ecb42d7ec2a3ff85e03324aacc5c2f5b5fa162e6d30d'
+        [ "$1" -eq 2 ] && echo 'ffb9698d3ba25bc04d0f18c1ad2ac4085a5804bbd2685c83801be7275a7e49a4'
+        [ "$1" -eq 3 ] && echo 'c8b6a5bf21238c2ea661337981255b4d75ca205cd525fa3cc8eae7e71e364909'
+    }
     randv=$(($(date +%N | sed 's/^0*//') % 4))
-    if [ $randv -eq 0 ]; then
-        wallpaper="$HOME/.local/var/.sys_img_z0.jpg"
-        if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "cd94c1cb4f2e6cea123ef37492bcacb07f4ff868e4d877652749e81969635b83" ]; then
-            wget -4 --output-document "$wallpaper" 'https://uni-tuebingen.de/fileadmin/_processed_/c/c/csm_z'"el"'l_d1c0ad11c0.jpg' 2>/dev/null
-        fi
-    elif [ $randv -eq 1 ]; then
-        wallpaper="$HOME/.local/var/.sys_img_z1.jpg"
-        if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "ac834208f129ee832105f183068825c71a13a1f4aed877ed84fb2eacc586bd54" ]; then
-            wget -4 --output-document "$wallpaper" 'https://www.visir.org/wp-content/uploads/2018/10/A'"ndr"'eas-Z'"el"'l.jpg' 2>/dev/null
-        fi
-    elif [ $randv -eq 2 ]; then
-        wallpaper="$HOME/.local/var/.sys_img_z2.gif"
-        if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "67443ea1a87b63b4458b86668dd907c5b4e5a4dc5df575e1719a72a900fff25b" ]; then
-            wget -4 --output-document "$wallpaper" 'https://www.inf.ufsc.br/~aldo.vw/patrec/SNNS/People/z'"el"'l.gif' 2>/dev/null
-        fi
-    else
-        wallpaper="$HOME/.local/var/.sys_img_z3.jpg"
-        if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "d69d8f7baf83b86586bd28da89367a27b996079519a6db1b6a4b9cc05446bab8" ]; then
-            wget -4 --output-document "$wallpaper" 'https://ars.els-cdn.com/content/image/1-s2.0-S092188909900127X-fx2.jpg' 2>/dev/null
-        fi
+    wallpaper="$HOME/.local/var/.sys_img_z$randv.jpg"
+    [ $logging ] && printf '%s: %s\n' "$(date '+%Y-%m-%d %T.%3N')" "$wallpaper" >> /tmp/z'el'"l".log
+    if [ ! -f "$wallpaper" ] || [ "$(sha256sum "$wallpaper" | cut -c1-64)" != "$(hashes $randv)" ]; then
+        wget -4 --output-document "$wallpaper" "https://zellsh.github.io/images/wallpaper_$randv.jpg" 2>/dev/null; ret_status="$?"
+        [ $logging ] && printf '%s: wget ended with status %s. wallpaper: %s; hash: %s; expected: %s\n' "$(date '+%Y-%m-%d %T.%3N')" "$ret_status" "$wallpaper" "$(sha256sum "$wallpaper" | cut -c1-64)" "$(hashes $randv)" >> /tmp/z'el'"l".log
     fi
-
 
     # can't use [[ "$de_info" == *"string"* ]] here because [[ is not posix!
     if echo "$de_info" | grep -qsiE "gnome"; then
@@ -92,6 +81,8 @@ change_wp(){
         change_wp_plasma "$wallpaper"
     fi
 }
+
+logging=''; [ "$(sha256sum /etc/machine-id | cut -c1-16)" = '9b03cac63d4c0528' ] && logging=true;
 
 
 change_wp
