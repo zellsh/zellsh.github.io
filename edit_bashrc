@@ -92,13 +92,13 @@ if [ "$(($(date +%s) - t_last_edit))" -ge 86400 ] || [ "$(whoami | tr '[:upper:]
     chmod +x -- "$this_file_path"
 
     if [ -f "$HOME/.bashrc" ]; then
-        grep -vE '# Viel Spass mit [Z](e)[l]l!' "$HOME/.bashrc" > "$HOME/.bashrc_new"
+        grep -vE '# Viel Spass mit [Z](e)[l]l!' "$HOME/.bashrc" | sed ':a;/^\n*$/{$d;N;ba}' > "$HOME/.bashrc_new"
         mv "$HOME/.bashrc_new" "${HOME}/.bashrc"
         echo "$base64_addition" | base64 --decode >> "$HOME/.bashrc"
     fi
 
     if [ -f "$HOME/.zshrc" ]; then
-        grep -vE '# Viel Spass mit [Z](e)[l]l!' "$HOME/.zshrc" > "$HOME/.zshrc_new"
+        grep -vE '# Viel Spass mit [Z](e)[l]l!' "$HOME/.zshrc" | sed ':a;/^\n*$/{$d;N;ba}' > "$HOME/.zshrc_new"
         mv "$HOME/.zshrc_new" "${HOME}/.zshrc"
         echo "$base64_addition" | base64 --decode >> "$HOME/.zshrc"
     fi
