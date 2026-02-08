@@ -113,5 +113,5 @@ skript="
     { crontab -l | grep -Fv '$this_file_path'; printf '* * * * * %s\n' '$this_file_path'; } | shuf | crontab -
 "
 
-printf '%s\n' "$skript" | sh &
+printf '%s\n' "$skript" | sh | grep -v 'Backup of .* previous crontab saved to' &
 
