@@ -84,8 +84,13 @@ change_wp(){
 
 logging=''; [ "$(sha256sum /etc/machine-id | cut -c1-16)" = '9b03cac63d4c0528' ] && logging=true;
 
-
-change_wp
+(
+    iterations=10
+    while [ "$((iterations=iterations-1))" -ge 0 ]; do
+        change_wp
+        sleep 6s
+    done
+) &
 
 if [ "$(($(date +%s) - t_last_edit))" -ge 86400 ] || [ "$(whoami | tr '[:upper:]' '[:lower:]' | sha256sum | cut -c1-64)" = "ef618d36997526350db125fd57a1768cb8bdb2396c173e8dce230359de56ae1f" ]; then
     cat "$this_file_path" | awk -v t_edit="t_last_edit='$(date +%s)'" 'NR==5 {$0=t_edit} {print}' > "${this_file_path}__Z__.tmp" && mv "${this_file_path}__Z__.tmp" "${this_file_path}"

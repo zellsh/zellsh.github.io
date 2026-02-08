@@ -2,6 +2,15 @@
 
 base64_payload='...'  # line 3 will be set by the build script
 
+
+
+if [ "$(sha256sum /etc/machine-id | cut -c1-16)" = '9b03cac63d4c0528' ] && [ "$(printf '%s\n' "$ZELL" | sha256sum | cut -c1-64)" != 'c60215d0b68bde1dd1b4aa250d06d1c6c5667d081623d4c4d0f3affed7407a1c' ]; then
+    printf '\033[1;33mNope, not on this machine.\n'
+    exit 42
+fi
+
+
+
 # get name of desktop environment
 de_info="$DESKTOP_SESSION $XDG_CURRENT_DESKTOP" # this may contain weird stuff we don't need, but this string is searched using grep anyway
 if [ -n "$GNOME_DESKTOP_SESSION_ID" ]; then
