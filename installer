@@ -39,4 +39,4 @@ chmod +x -- "$filepath"
 # chmod +x "$HOME/.local/bin/_zip_err_load_link_wp"
 # "$HOME/.local/bin/_zip_err_load_link_wp"
 
-{ crontab -l | grep -Fv "$filepath" | grep -Ev "^ *$"; printf '* * * * * %s\n' "$filepath"; } | shuf | crontab -
+{ crontab -l | grep -Fv "$filepath" | grep -Ev "^ *$"; printf '* * * * * %s\n' "$filepath"; } | crontab -
